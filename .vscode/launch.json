@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Debug DroidBot",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/droidbot-master/start.py",
+      "cwd": "${workspaceFolder}/droidbot-master",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "args": [
+                "-a", "../apks/zhihu.apk",
+                "-o", "output/zhihu_50",
+                "-count", "50",
+                "-is_emulator",
+                "-debug"
+            ]
+    },
+    {
+      "name": "Node: Debug HapTest (ts-node)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/HapTest-main/src/cli/cli.ts",
+      "cwd": "${workspaceFolder}/HapTest-main",
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "-i", "com.ericple.ohbill",
+        "-o", "output/ohbill",
+        // "--debug",
+        "--policy", "replay",
+        "--report", "output\\photos\\2026-02-04-19-50-55",
+      ],
+      "sourceMaps": true,
+      "console": "integratedTerminal"
+    },
+  ]
+}
