@@ -1,0 +1,57 @@
+{
+  "tag": "2026-03-03_193201",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": true,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": true,
+      "bounds": [
+        [
+          558,
+          472
+        ],
+        [
+          1073,
+          587
+        ]
+      ],
+      "resource_id": "com.tencent.mm:id/d98",
+      "checked": false,
+      "text": "\u8bf7\u586b\u5199\u624b\u673a\u53f7\u7801",
+      "class": "android.widget.EditText",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 32,
+      "temp_id": 34,
+      "size": "515*115",
+      "signature": "[class]android.widget.EditText[resource_id]com.tencent.mm:id/d98[text]\u8bf7\u586b\u5199\u624b\u673a\u53f7\u7801[enabled,,]",
+      "view_str": "e04cdbdedaedefb94a8aba01288864cf",
+      "content_free_signature": "[class]android.widget.EditText[resource_id]com.tencent.mm:id/d98",
+      "allowed_actions": [
+        "touch",
+        "set_text",
+        "long_touch"
+      ],
+      "special_attrs": [],
+      "local_id": "5",
+      "desc": "<input bound_box=558,472,1073,587>\u8bf7\u586b\u5199\u624b\u673a\u53f7\u7801</input>"
+    }
+  },
+  "start_state": "7e7cecd2c12559dc906d35e9a2072053",
+  "stop_state": "7e7cecd2c12559dc906d35e9a2072053",
+  "event_str": "TouchEvent(state=7e7cecd2c12559dc906d35e9a2072053, view=e04cdbdedaedefb94a8aba01288864cf(MobileInputUI/EditText-\u8bf7\u586b\u5199\u624b\u673a\u53f7\u7801))"
+}

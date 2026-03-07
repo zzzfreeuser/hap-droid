@@ -1,0 +1,51 @@
+{
+  "tag": "2026-03-03_193018",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        25
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          308,
+          153
+        ],
+        [
+          1131,
+          729
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 23,
+      "temp_id": 24,
+      "size": "823*576",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "5544c0fa11e20aa81fa6cca8d774c03e",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    }
+  },
+  "start_state": "a00a521bcd619c86e3814b925152d012",
+  "stop_state": "a00a521bcd619c86e3814b925152d012",
+  "event_str": "TouchEvent(state=a00a521bcd619c86e3814b925152d012, view=5544c0fa11e20aa81fa6cca8d774c03e(LoginSelectUI/LinearLayout-))"
+}

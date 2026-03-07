@@ -1,0 +1,55 @@
+{
+  "tag": "2026-03-03_192936",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          230,
+          2334
+        ],
+        [
+          518,
+          2447
+        ]
+      ],
+      "resource_id": "com.tencent.mm:id/mje",
+      "checked": false,
+      "text": "\u767b\u5f55",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 11,
+      "temp_id": 12,
+      "size": "288*113",
+      "signature": "[class]android.widget.Button[resource_id]com.tencent.mm:id/mje[text]\u767b\u5f55[enabled,,]",
+      "view_str": "37847b76b28db0c10ef8b1f2321574c1",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.tencent.mm:id/mje",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "0",
+      "desc": "<button bound_box=230,2334,518,2447>\u767b\u5f55</button>"
+    }
+  },
+  "start_state": "d6cbafb84d5d1e843c5c796bfd13a7f5",
+  "stop_state": "a00a521bcd619c86e3814b925152d012",
+  "event_str": "TouchEvent(state=d6cbafb84d5d1e843c5c796bfd13a7f5, view=37847b76b28db0c10ef8b1f2321574c1(WelcomeActivity/Button-\u767b\u5f55))"
+}

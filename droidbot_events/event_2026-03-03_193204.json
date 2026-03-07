@@ -1,0 +1,55 @@
+{
+  "tag": "2026-03-03_193204",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          349,
+          636
+        ],
+        [
+          674,
+          675
+        ]
+      ],
+      "resource_id": "com.tencent.mm:id/iov",
+      "checked": false,
+      "text": "\u7528\u5fae\u4fe1\u53f7/QQ\u53f7/\u90ae\u7bb1\u767b\u5f55",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 25,
+      "temp_id": 35,
+      "size": "325*39",
+      "signature": "[class]android.widget.Button[resource_id]com.tencent.mm:id/iov[text]\u7528\u5fae\u4fe1\u53f7/QQ\u53f7/\u90ae\u7bb1\u767b\u5f55[enabled,,]",
+      "view_str": "9da92f6b6cba099964171b1b790cb5e8",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.tencent.mm:id/iov",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "6",
+      "desc": "<button bound_box=349,636,674,675>\u7528\u5fae\u4fe1\u53f7/QQ\u53f7/\u90ae\u7bb1\u767b\u5f55</button>"
+    }
+  },
+  "start_state": "7e7cecd2c12559dc906d35e9a2072053",
+  "stop_state": "7e7cecd2c12559dc906d35e9a2072053",
+  "event_str": "TouchEvent(state=7e7cecd2c12559dc906d35e9a2072053, view=9da92f6b6cba099964171b1b790cb5e8(MobileInputUI/Button-\u7528\u5fae\u4fe1\u53f7/QQ\u53f7/\u90ae))"
+}

@@ -1,0 +1,49 @@
+{
+  "tag": "2026-03-03_193133",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          600,
+          548
+        ],
+        [
+          839,
+          787
+        ]
+      ],
+      "resource_id": "com.tencent.mm:id/ioi",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 24,
+      "temp_id": 25,
+      "size": "239*239",
+      "signature": "[class]android.widget.ImageView[resource_id]com.tencent.mm:id/ioi[text]None[enabled,,]",
+      "view_str": "e660d9f27ed920dbf2d3a1fb83104660",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]com.tencent.mm:id/ioi"
+    }
+  },
+  "start_state": "8b7d81742397990055f399a7a4c76914",
+  "stop_state": "8b7d81742397990055f399a7a4c76914",
+  "event_str": "TouchEvent(state=8b7d81742397990055f399a7a4c76914, view=e660d9f27ed920dbf2d3a1fb83104660(LoginAsExDeviceUI/ImageView-))"
+}

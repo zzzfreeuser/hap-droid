@@ -1,0 +1,49 @@
+{
+  "tag": "2026-03-03_192953",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2560
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ImageView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 8,
+      "temp_id": 9,
+      "size": "1440*2560",
+      "signature": "[class]android.widget.ImageView[resource_id]None[text]None[enabled,,]",
+      "view_str": "5395e5aca736eb28b73d7d3329f055b3",
+      "content_free_signature": "[class]android.widget.ImageView[resource_id]None"
+    }
+  },
+  "start_state": "d6cbafb84d5d1e843c5c796bfd13a7f5",
+  "stop_state": "d6cbafb84d5d1e843c5c796bfd13a7f5",
+  "event_str": "TouchEvent(state=d6cbafb84d5d1e843c5c796bfd13a7f5, view=5395e5aca736eb28b73d7d3329f055b3(WelcomeActivity/ImageView-))"
+}

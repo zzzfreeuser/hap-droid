@@ -1,0 +1,51 @@
+{
+  "tag": "2026-03-03_192945",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        14
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          16,
+          54
+        ],
+        [
+          113,
+          153
+        ]
+      ],
+      "resource_id": "com.tencent.mm:id/actionbar_up_indicator",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 13,
+      "size": "97*99",
+      "signature": "[class]android.widget.LinearLayout[resource_id]com.tencent.mm:id/actionbar_up_indicator[text]None[enabled,,]",
+      "view_str": "a822ff859afcdb309482d66fd39476ff",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]com.tencent.mm:id/actionbar_up_indicator"
+    }
+  },
+  "start_state": "5355b3c2d2c7b388f57af9327acc9802",
+  "stop_state": "d6cbafb84d5d1e843c5c796bfd13a7f5",
+  "event_str": "TouchEvent(state=5355b3c2d2c7b388f57af9327acc9802, view=a822ff859afcdb309482d66fd39476ff(RegByMobileRegAIOUI/LinearLayout-))"
+}

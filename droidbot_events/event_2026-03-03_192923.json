@@ -1,0 +1,11 @@
+{
+  "tag": "2026-03-03_192923",
+  "event": {
+    "event_type": "kill_app",
+    "log_lines": null,
+    "stop_intent": "am force-stop com.tencent.mm"
+  },
+  "start_state": "c24a02dac066d0df1eb6b54d9fb71458",
+  "stop_state": "c24a02dac066d0df1eb6b54d9fb71458",
+  "event_str": "KillAppEvent()"
+}  

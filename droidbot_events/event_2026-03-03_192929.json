@@ -1,0 +1,11 @@
+{
+  "tag": "2026-03-03_192929",
+  "event": {
+    "event_type": "intent",
+    "log_lines": null,
+    "intent": "am start com.tencent.mm/com.tencent.mm.ui.LauncherUI"
+  },
+  "start_state": "32cadf9973d6d3b6000004c89ecde7d0",
+  "stop_state": "51eff3843b8e639b4fd14760046fe834",
+  "event_str": "IntentEvent(intent='am start com.tencent.mm/com.tencent.mm.ui.LauncherUI')"
+}

@@ -1,0 +1,55 @@
+{
+  "tag": "2026-03-03_193108",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          517,
+          853
+        ],
+        [
+          922,
+          914
+        ]
+      ],
+      "resource_id": "com.tencent.mm:id/ioh",
+      "checked": false,
+      "text": "\u7528\u624b\u673a\u5fae\u4fe1\u626b\u7801\u767b\u5f55",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 23,
+      "temp_id": 26,
+      "size": "405*61",
+      "signature": "[class]android.widget.Button[resource_id]com.tencent.mm:id/ioh[text]\u7528\u624b\u673a\u5fae\u4fe1\u626b\u7801\u767b\u5f55[enabled,,]",
+      "view_str": "522718706d4a3f4adc27edb52f2dea08",
+      "content_free_signature": "[class]android.widget.Button[resource_id]com.tencent.mm:id/ioh",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "1",
+      "desc": "<button bound_box=517,853,922,914>\u7528\u624b\u673a\u5fae\u4fe1\u626b\u7801\u767b\u5f55</button>"
+    }
+  },
+  "start_state": "8b7d81742397990055f399a7a4c76914",
+  "stop_state": "8b7d81742397990055f399a7a4c76914",
+  "event_str": "TouchEvent(state=8b7d81742397990055f399a7a4c76914, view=522718706d4a3f4adc27edb52f2dea08(LoginAsExDeviceUI/Button-\u7528\u624b\u673a\u5fae\u4fe1\u626b\u7801\u767b\u5f55))"
+}

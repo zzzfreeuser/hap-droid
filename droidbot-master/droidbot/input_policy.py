@@ -6,6 +6,7 @@ from abc import abstractmethod
 
 from .input_event import InputEvent, KeyEvent, IntentEvent, TouchEvent, ManualEvent, SetTextEvent, KillAppEvent
 from .utg import UTG
+from .intent import Intent
 
 # Max number of restarts
 MAX_NUM_RESTARTS = 5

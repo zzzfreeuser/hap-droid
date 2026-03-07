@@ -37,5 +37,14 @@
       "sourceMaps": true,
       "console": "integratedTerminal"
     },
+    {
+      "name": "Python: Debug json",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scan_fields.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+    },
   ]
 }

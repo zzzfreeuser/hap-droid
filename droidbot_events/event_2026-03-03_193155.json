@@ -1,0 +1,52 @@
+{
+  "tag": "2026-03-03_193155",
+  "event": {
+    "event_type": "touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        28,
+        31
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          333,
+          356
+        ],
+        [
+          1106,
+          472
+        ]
+      ],
+      "resource_id": "com.tencent.mm:id/cjz",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 25,
+      "temp_id": 27,
+      "size": "773*116",
+      "signature": "[class]android.widget.LinearLayout[resource_id]com.tencent.mm:id/cjz[text]None[enabled,,]",
+      "view_str": "d7b4d3842038979d76f3f77806839847",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]com.tencent.mm:id/cjz"
+    }
+  },
+  "start_state": "7e7cecd2c12559dc906d35e9a2072053",
+  "stop_state": "30097353982f78d7d87f539ba38d5e8a",
+  "event_str": "TouchEvent(state=7e7cecd2c12559dc906d35e9a2072053, view=d7b4d3842038979d76f3f77806839847(MobileInputUI/LinearLayout-))"
+}

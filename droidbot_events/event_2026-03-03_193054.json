@@ -1,0 +1,54 @@
+{
+  "tag": "2026-03-03_193054",
+  "event": {
+    "event_type": "long_touch",
+    "log_lines": null,
+    "x": null,
+    "y": null,
+    "view": {
+      "package": "com.tencent.mm",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        24,
+        26,
+        36
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          308,
+          153
+        ],
+        [
+          1131,
+          2560
+        ]
+      ],
+      "resource_id": "android:id/list",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.ListView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": true,
+      "parent": 22,
+      "temp_id": 23,
+      "size": "823*2407",
+      "signature": "[class]android.widget.ListView[resource_id]android:id/list[text]None[enabled,,]",
+      "view_str": "41ffa095add9d5fca5ee55e12ea803a5",
+      "content_free_signature": "[class]android.widget.ListView[resource_id]android:id/list"
+    },
+    "duration": 2000
+  },
+  "start_state": "a00a521bcd619c86e3814b925152d012",
+  "stop_state": "a00a521bcd619c86e3814b925152d012",
+  "event_str": "LongTouchEvent(state=a00a521bcd619c86e3814b925152d012, view=41ffa095add9d5fca5ee55e12ea803a5(LoginSelectUI/ListView-))"
+}
