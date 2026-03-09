@@ -1,0 +1,2081 @@
+{
+  "tag": "2026-03-09_144101",
+  "state_str": "86303faac5810ac752c79508f1fff63c",
+  "state_str_content_free": "d1ff3230ffb391a59a5e9ba2eb88c3b3",
+  "foreground_activity": "com.baidu.netdisk/com.baidu.sapi2.activity.RegisterActivity",
+  "activity_stack": [
+    "com.baidu.netdisk/com.baidu.sapi2.activity.RegisterActivity",
+    "com.baidu.netdisk/.ui.account.LoginRegisterActivity",
+    "com.baidu.netdisk/.ui.Navigate"
+  ],
+  "background_services": [
+    "com.nemu.nlp/.LocationService",
+    "com.baidu.netdisk/org.chromium.content.app.SandboxedProcessService0",
+    "com.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl",
+    "android.ext.services/.notification.Assistant",
+    "com.android.webview/org.chromium.android_webview.services.MetricsBridgeService",
+    "com.android.systemui/.keyguard.KeyguardService",
+    "com.baidu.netdisk/com.baidu.swan.apps.process.messaging.service.SwanAppMessengerService",
+    "com.android.systemui/.ImageWallpaper",
+    "com.baidu.netdisk/.service.NetdiskService",
+    "com.android.phone/com.android.internal.telephony.CellularNetworkService",
+    "io.github.ylimit.droidbotapp/.DroidBotIME",
+    "com.mumu.store/org.chromium.content.app.SandboxedProcessService0",
+    "com.android.networkstack/com.android.server.NetworkStackService",
+    "com.netease.nemu_vapi_android.nemu/com.netease.nemu_vapi_android.service.AppService",
+    "io.github.ylimit.droidbotapp/io.github.privacystreams.accessibility.PSAccessibilityService",
+    "com.android.systemui/.SystemUIService",
+    "android.ext.services/com.android.textclassifier.DefaultTextClassifierService",
+    "com.netease.nemu_vapi_android.nemu/com.netease.nemu_vapi_android.service.ApiService",
+    "com.android.systemui/.dump.SystemUIAuxiliaryDumpService",
+    "com.android.networkstack.tethering/.TetheringService",
+    "com.android.phone/com.android.internal.telephony.dataconnection.CellularDataService",
+    "com.mumu.acc/.AccService",
+    "com.android.location.fused/.FusedLocationService",
+    "app.lawnchair/com.android.quickstep.TouchInteractionService",
+    "com.baidu.netdisk/com.qq.e.comm.DownloadService",
+    "android.ext.services/.autofill.InlineSuggestionRenderServiceImpl"
+  ],
+  "width": 1440,
+  "height": 2560,
+  "views": [
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        1
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2560
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": -1,
+      "temp_id": 0,
+      "size": "1440*2560",
+      "signature": "[class]android.widget.FrameLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "a0dbeed898cca67f9ca2fa565a6f22e0",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        2
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2560
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.widget.LinearLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 0,
+      "temp_id": 1,
+      "size": "1440*2560",
+      "signature": "[class]android.widget.LinearLayout[resource_id]None[text]None[enabled,,]",
+      "view_str": "5c29b37223d681923802265febdd0b3f",
+      "content_free_signature": "[class]android.widget.LinearLayout[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        3
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2560
+        ]
+      ],
+      "resource_id": "android:id/content",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.FrameLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 1,
+      "temp_id": 2,
+      "size": "1440*2560",
+      "signature": "[class]android.widget.FrameLayout[resource_id]android:id/content[text]None[enabled,,]",
+      "view_str": "98a203a3fe748ca5bdb1b525d067f3b6",
+      "content_free_signature": "[class]android.widget.FrameLayout[resource_id]android:id/content"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        4,
+        49
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2560
+        ]
+      ],
+      "resource_id": "com.baidu.netdisk:id/root_view",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.RelativeLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 2,
+      "temp_id": 3,
+      "size": "1440*2560",
+      "signature": "[class]android.widget.RelativeLayout[resource_id]com.baidu.netdisk:id/root_view[text]None[enabled,,]",
+      "view_str": "ddd8cf53d0377333a7dfe36347f1fb3c",
+      "content_free_signature": "[class]android.widget.RelativeLayout[resource_id]com.baidu.netdisk:id/root_view"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        5
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2560
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.webkit.WebView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 3,
+      "temp_id": 4,
+      "size": "1440*2560",
+      "signature": "[class]android.webkit.WebView[resource_id]None[text]None[enabled,,]",
+      "view_str": "7109a02f3ffced1b1bec8d8a1624a373",
+      "content_free_signature": "[class]android.webkit.WebView[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        6
+      ],
+      "focused": true,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2562
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u6ce8\u518c",
+      "class": "android.webkit.WebView",
+      "scrollable": true,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 4,
+      "temp_id": 5,
+      "size": "1440*2562",
+      "signature": "[class]android.webkit.WebView[resource_id]None[text]\u6ce8\u518c[enabled,,]",
+      "view_str": "34c93b0842ba915a38bcf4962ed42954",
+      "content_free_signature": "[class]android.webkit.WebView[resource_id]None",
+      "allowed_actions": [
+        "scroll up",
+        "scroll down"
+      ],
+      "special_attrs": [],
+      "local_id": "0",
+      "desc": "<scrollbar bound_box=0,0,1440,2562></scrollbar>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        7
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2562
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 5,
+      "temp_id": 6,
+      "size": "1440*2562",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "5eb29819f169aa0f5b0091a79fc6689e",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        8,
+        9,
+        12
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          2562
+        ]
+      ],
+      "resource_id": "login-app",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 6,
+      "temp_id": 7,
+      "size": "1440*2562",
+      "signature": "[class]android.view.View[resource_id]login-app[text][enabled,,]",
+      "view_str": "faccc6eea1a614427d1c5bf2cb0e055f",
+      "content_free_signature": "[class]android.view.View[resource_id]login-app"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          630
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 7,
+      "temp_id": 8,
+      "size": "1440*630",
+      "signature": "[class]android.widget.TextView[resource_id]None[text][enabled,,]",
+      "view_str": "83284f89e46ce4a15b72cb67c8545a0b",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        10,
+        11
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          1440,
+          180
+        ]
+      ],
+      "resource_id": "",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 7,
+      "temp_id": 9,
+      "size": "1440*180",
+      "signature": "[class]android.view.View[resource_id][text][enabled,,]",
+      "view_str": "ea7c66c0816d061f95b975a93e54e847",
+      "content_free_signature": "[class]android.view.View[resource_id]"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          36,
+          101
+        ],
+        [
+          87,
+          153
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u8fd4\u56de",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 9,
+      "temp_id": 10,
+      "size": "51*52",
+      "signature": "[class]android.widget.Button[resource_id]None[text]\u8fd4\u56de[enabled,,]",
+      "view_str": "c7cb6f9fc37b5c2165a8b4fe5f1667e0",
+      "content_free_signature": "[class]android.widget.Button[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "1",
+      "desc": "<button bound_box=36,101,87,153>\u8fd4\u56de</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          0
+        ],
+        [
+          114,
+          90
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u8fd4\u56de",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 9,
+      "temp_id": 11,
+      "size": "114*90",
+      "signature": "[class]android.widget.Button[resource_id]None[text]\u8fd4\u56de[enabled,,]",
+      "view_str": "c7cb6f9fc37b5c2165a8b4fe5f1667e0",
+      "content_free_signature": "[class]android.widget.Button[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        13
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          333
+        ],
+        [
+          1379,
+          2000
+        ]
+      ],
+      "resource_id": "naPassWrapper",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 7,
+      "temp_id": 12,
+      "size": "1319*1667",
+      "signature": "[class]android.view.View[resource_id]naPassWrapper[text][enabled,,]",
+      "view_str": "0f42138e801f31d6e32b29e46687926b",
+      "content_free_signature": "[class]android.view.View[resource_id]naPassWrapper"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 4,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        14,
+        16,
+        35,
+        39
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          333
+        ],
+        [
+          1379,
+          1347
+        ]
+      ],
+      "resource_id": "reg-div",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 12,
+      "temp_id": 13,
+      "size": "1319*1014",
+      "signature": "[class]android.view.View[resource_id]reg-div[text][enabled,,]",
+      "view_str": "ed6c039f24581ebff3985370e599e7f5",
+      "content_free_signature": "[class]android.view.View[resource_id]reg-div"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        15
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          333
+        ],
+        [
+          1379,
+          612
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 13,
+      "temp_id": 14,
+      "size": "1319*279",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "dce502ad4dc53b18aaf0c05a8ae1f1ad",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          427
+        ],
+        [
+          1379,
+          486
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u6b22\u8fce\u6ce8\u518c\u767e\u5ea6\u8d26\u53f7",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 14,
+      "temp_id": 15,
+      "size": "1319*59",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]\u6b22\u8fce\u6ce8\u518c\u767e\u5ea6\u8d26\u53f7[enabled,,]",
+      "view_str": "d89cb1d3e0d2d1279bc00af14b69c7b2",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "2",
+      "desc": "<button bound_box=60,427,1379,486>\u6b22\u8fce\u6ce8\u518c\u767e\u5ea6\u8d26\u53f7</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        17,
+        22,
+        34
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          612
+        ],
+        [
+          1190,
+          1122
+        ]
+      ],
+      "resource_id": "reg-contentWrapper",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 13,
+      "temp_id": 16,
+      "size": "941*510",
+      "signature": "[class]android.view.View[resource_id]reg-contentWrapper[text][enabled,,]",
+      "view_str": "517a8e4e2a1f31a7320f66fbee888867",
+      "content_free_signature": "[class]android.view.View[resource_id]reg-contentWrapper"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        18,
+        21
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          612
+        ],
+        [
+          1190,
+          965
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 16,
+      "temp_id": 17,
+      "size": "941*353",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "0508b55bc5d1c9cf9b5320276e5797f0",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        19,
+        20
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          612
+        ],
+        [
+          1190,
+          747
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "+86",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 17,
+      "temp_id": 18,
+      "size": "941*135",
+      "signature": "[class]android.view.View[resource_id]None[text]+86[enabled,,]",
+      "view_str": "dfb7e4797b916fa653c81e369901a2d0",
+      "content_free_signature": "[class]android.view.View[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "3",
+      "desc": "<button bound_box=249,612,1190,747>+86</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          650
+        ],
+        [
+          465,
+          708
+        ]
+      ],
+      "resource_id": "input-label-g4zfea9iy",
+      "checked": false,
+      "text": "+86",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 18,
+      "temp_id": 19,
+      "size": "216*58",
+      "signature": "[class]android.widget.TextView[resource_id]input-label-g4zfea9iy[text]+86[enabled,,]",
+      "view_str": "4c050e7d302a5f2f3b87d991f7af81e5",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]input-label-g4zfea9iy",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "4",
+      "desc": "<button bound_box=249,650,465,708>+86</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": true,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          463,
+          612
+        ],
+        [
+          1190,
+          747
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u8bf7\u8f93\u5165\u624b\u673a\u53f7",
+      "class": "android.widget.EditText",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 18,
+      "temp_id": 20,
+      "size": "727*135",
+      "signature": "[class]android.widget.EditText[resource_id]None[text]\u8bf7\u8f93\u5165\u624b\u673a\u53f7[enabled,,]",
+      "view_str": "adcf3c0eecfb4120baf5502f5810c835",
+      "content_free_signature": "[class]android.widget.EditText[resource_id]None",
+      "allowed_actions": [
+        "touch",
+        "set_text"
+      ],
+      "special_attrs": [],
+      "local_id": "5",
+      "desc": "<input bound_box=463,612,1190,747>\u8bf7\u8f93\u5165\u624b\u673a\u53f7</input>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": false,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          812
+        ],
+        [
+          1190,
+          936
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u7acb\u5373\u6ce8\u518c",
+      "class": "android.widget.Button",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 17,
+      "temp_id": 21,
+      "size": "941*124",
+      "signature": "[class]android.widget.Button[resource_id]None[text]\u7acb\u5373\u6ce8\u518c[,,]",
+      "view_str": "50866bbb2fc0fa394058ada8b08089bd",
+      "content_free_signature": "[class]android.widget.Button[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "6",
+      "desc": "<button bound_box=249,812,1190,936>\u7acb\u5373\u6ce8\u518c</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        23,
+        25
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          996
+        ],
+        [
+          1190,
+          1122
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u8bf7\u60a8\u9605\u8bfb\u5e76\u540c\u610f\u3001\u767e\u5ea6\u7528\u6237\u534f\u8bae\u3001\u548c\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56\u3001\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 16,
+      "temp_id": 22,
+      "size": "941*126",
+      "signature": "[class]android.view.View[resource_id]None[text]\u8bf7\u60a8\u9605\u8bfb\u5e76\u540c\u610f\u3001\u767e\u5ea6\u7528\u6237\u534f\u8bae\u3001\u548c\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56\u3001\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e[enabled,,]",
+      "view_str": "d63b8e68a49c5ce268ffe1619a38d7dc",
+      "content_free_signature": "[class]android.view.View[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "7",
+      "desc": "<button bound_box=249,996,1190,1122>\u8bf7\u60a8\u9605\u8bfb\u5e76\u540c\u610f\u3001\u767e\u5ea6\u7528\u6237\u534f\u8bae\u3001\u548c\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56\u3001\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        24
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          996
+        ],
+        [
+          319,
+          1066
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 22,
+      "temp_id": 23,
+      "size": "70*70",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "09e6bffa9fe995d867eaee979ef0ecb9",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": true,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          996
+        ],
+        [
+          319,
+          1066
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u8bf7\u52fe\u9009\u534f\u8bae",
+      "class": "android.widget.CheckBox",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 23,
+      "temp_id": 24,
+      "size": "70*70",
+      "signature": "[class]android.widget.CheckBox[resource_id]None[text]\u8bf7\u52fe\u9009\u534f\u8bae[enabled,,]",
+      "view_str": "3e2e6ad5e1aa9a956052ad18bee65827",
+      "content_free_signature": "[class]android.widget.CheckBox[resource_id]None",
+      "allowed_actions": [
+        "select",
+        "unselect"
+      ],
+      "special_attrs": [],
+      "local_id": "8",
+      "desc": "<checkbox bound_box=249,996,319,1066>\u8bf7\u52fe\u9009\u534f\u8bae</checkbox>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 5,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        26,
+        27,
+        29,
+        30,
+        32
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          317,
+          996
+        ],
+        [
+          1190,
+          1122
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 22,
+      "temp_id": 25,
+      "size": "873*126",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "0a42e8adee473bfabed5ead605e4527b",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          522,
+          1008
+        ],
+        [
+          531,
+          1046
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": " ",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 25,
+      "temp_id": 26,
+      "size": "9*38",
+      "signature": "[class]android.widget.TextView[resource_id]None[text] [enabled,,]",
+      "view_str": "f74a6d8ee5bf44738d1243566e898208",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "9",
+      "desc": "<button bound_box=522,1008,531,1046> </button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "\u767e\u5ea6\u7528\u6237\u534f\u8bae",
+      "children": [
+        28
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          528,
+          1010
+        ],
+        [
+          715,
+          1046
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 25,
+      "temp_id": 27,
+      "size": "187*36",
+      "signature": "[class]android.view.View[resource_id]None[text]None[enabled,,]",
+      "view_str": "043d7c25b77510b195b54f7b01856cc2",
+      "content_free_signature": "[class]android.view.View[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "10",
+      "desc": "<button text='\u767e\u5ea6\u7528\u6237\u534f\u8bae' bound_box=528,1010,715,1046></button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          528,
+          1010
+        ],
+        [
+          715,
+          1046
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u767e\u5ea6\u7528\u6237\u534f\u8bae ",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 27,
+      "temp_id": 28,
+      "size": "187*36",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]\u767e\u5ea6\u7528\u6237\u534f\u8bae [enabled,,]",
+      "view_str": "cb60408184c2cdde741f4f23bb120566",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "11",
+      "desc": "<button bound_box=528,1010,715,1046>\u767e\u5ea6\u7528\u6237\u534f\u8bae </button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          740,
+          1008
+        ],
+        [
+          751,
+          1046
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": " ",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 25,
+      "temp_id": 29,
+      "size": "11*38",
+      "signature": "[class]android.widget.TextView[resource_id]None[text] [enabled,,]",
+      "view_str": "f74a6d8ee5bf44738d1243566e898208",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "12",
+      "desc": "<button bound_box=740,1008,751,1046> </button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56",
+      "children": [
+        31
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          747,
+          1010
+        ],
+        [
+          985,
+          1046
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 25,
+      "temp_id": 30,
+      "size": "238*36",
+      "signature": "[class]android.view.View[resource_id]None[text]None[enabled,,]",
+      "view_str": "46ef9a30c149bc54945887d6821a5c8a",
+      "content_free_signature": "[class]android.view.View[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "13",
+      "desc": "<button text='\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56' bound_box=747,1010,985,1046></button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          747,
+          1010
+        ],
+        [
+          985,
+          1046
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 30,
+      "temp_id": 31,
+      "size": "238*36",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56[enabled,,]",
+      "view_str": "d57ac67784629799c30a04ee356778e3",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "14",
+      "desc": "<button bound_box=747,1010,985,1046>\u57fa\u672c\u529f\u80fd\u9690\u79c1\u653f\u7b56</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": "\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e",
+      "children": [
+        33
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          317,
+          1010
+        ],
+        [
+          1167,
+          1107
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": null,
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 25,
+      "temp_id": 32,
+      "size": "850*97",
+      "signature": "[class]android.view.View[resource_id]None[text]None[enabled,,]",
+      "view_str": "a26163171c4e826ba0f1e37318615251",
+      "content_free_signature": "[class]android.view.View[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "15",
+      "desc": "<button text='\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e' bound_box=317,1010,1167,1107></button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          317,
+          1010
+        ],
+        [
+          1167,
+          1107
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 32,
+      "temp_id": 33,
+      "size": "850*97",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e[enabled,,]",
+      "view_str": "b708a18191ec06f295e84fcb9e8e5fa5",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "16",
+      "desc": "<button bound_box=317,1010,1167,1107>\u513f\u7ae5\u4e2a\u4eba\u4fe1\u606f\u4fdd\u62a4\u58f0\u660e</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          249,
+          1152
+        ],
+        [
+          1190,
+          1152
+        ]
+      ],
+      "resource_id": "reg-loadingMask",
+      "checked": false,
+      "text": "",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 16,
+      "temp_id": 34,
+      "size": "941*0",
+      "signature": "[class]android.widget.TextView[resource_id]reg-loadingMask[text][enabled,,]",
+      "view_str": "d01df0b2cf682cb1832da038ff761d99",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]reg-loadingMask"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        36
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          1795
+        ],
+        [
+          1379,
+          2000
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 13,
+      "temp_id": 35,
+      "size": "1319*205",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "0017c7cc1129036bc36e89b44ea815cc",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        37,
+        38
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          366,
+          1795
+        ],
+        [
+          1073,
+          2000
+        ]
+      ],
+      "resource_id": "other-baidu-reg",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 35,
+      "temp_id": 36,
+      "size": "707*205",
+      "signature": "[class]android.view.View[resource_id]other-baidu-reg[text][enabled,,]",
+      "view_str": "c989e17e9bc54fb51b9f05de3bbffb3c",
+      "content_free_signature": "[class]android.view.View[resource_id]other-baidu-reg"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          366,
+          1795
+        ],
+        [
+          1073,
+          1840
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u6ce8\u518c\u767e\u5ea6\u8d26\u53f7\uff0c\u5373\u53ef\u767b\u5f55\u6240\u6709\u767e\u5ea6\u4ea7\u54c1",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 36,
+      "temp_id": 37,
+      "size": "707*45",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]\u6ce8\u518c\u767e\u5ea6\u8d26\u53f7\uff0c\u5373\u53ef\u767b\u5f55\u6240\u6709\u767e\u5ea6\u4ea7\u54c1[enabled,,]",
+      "view_str": "1e41e93f4714f37682bd2f93f47a487e",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None",
+      "allowed_actions": [
+        "touch"
+      ],
+      "special_attrs": [],
+      "local_id": "17",
+      "desc": "<button bound_box=366,1795,1073,1840>\u6ce8\u518c\u767e\u5ea6\u8d26\u53f7\uff0c\u5373\u53ef\u767b\u5f55\u6240\u6709\u767e\u5ea6\u4ea7\u54c1</button>"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          366,
+          1838
+        ],
+        [
+          1073,
+          2000
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 36,
+      "temp_id": 38,
+      "size": "707*162",
+      "signature": "[class]android.widget.TextView[resource_id]None[text][enabled,,]",
+      "view_str": "2d82cdbb7fb6df5e7c1b0b3b10ca40b4",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 3,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        40,
+        41,
+        42
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -20994
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 13,
+      "temp_id": 39,
+      "size": "941*-20994",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "cf073ccd528895018c8efbb87a62e0ed",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -22277
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u8f93\u5165\u77ed\u4fe1\u9a8c\u8bc1\u7801",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 39,
+      "temp_id": 40,
+      "size": "941*-22277",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]\u8f93\u5165\u77ed\u4fe1\u9a8c\u8bc1\u7801[enabled,,]",
+      "view_str": "1e60272f3044ffc44f90a5a51ec549e6",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -22158
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "\u77ed\u4fe1\u9a8c\u8bc1\u7801\u81f3",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 39,
+      "temp_id": 41,
+      "size": "941*-22158",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]\u77ed\u4fe1\u9a8c\u8bc1\u7801\u81f3[enabled,,]",
+      "view_str": "57add1c6d6088de2d744bc94608a370f",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        43
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -21771
+        ]
+      ],
+      "resource_id": "sms_verify_new",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 39,
+      "temp_id": 42,
+      "size": "941*-21771",
+      "signature": "[class]android.view.View[resource_id]sms_verify_new[text][enabled,,]",
+      "view_str": "a44f50bb8189c1660fff5eab818f5f81",
+      "content_free_signature": "[class]android.view.View[resource_id]sms_verify_new"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        44,
+        47
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -21771
+        ]
+      ],
+      "resource_id": "sms_verify_new-formWrapper",
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 42,
+      "temp_id": 43,
+      "size": "941*-21771",
+      "signature": "[class]android.view.View[resource_id]sms_verify_new-formWrapper[text][enabled,,]",
+      "view_str": "51db9bc0896d811f13897619466323cd",
+      "content_free_signature": "[class]android.view.View[resource_id]sms_verify_new-formWrapper"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 2,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        45,
+        46
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -21921
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 43,
+      "temp_id": 44,
+      "size": "941*-21921",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "d0ab8fd0c2baa2ea4fca62c73a1be94b",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          900,
+          0
+        ],
+        [
+          911,
+          -21984
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": " ",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 44,
+      "temp_id": 45,
+      "size": "11*-21984",
+      "signature": "[class]android.widget.TextView[resource_id]None[text] [enabled,,]",
+      "view_str": "a2913ac118e6c2ee0400465a00f10c67",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": true,
+      "clickable": true,
+      "is_password": false,
+      "focusable": true,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -21921
+        ]
+      ],
+      "resource_id": "sms_verify_new-keyboardInputHidden",
+      "checked": false,
+      "text": "",
+      "class": "android.widget.EditText",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 44,
+      "temp_id": 46,
+      "size": "941*-21921",
+      "signature": "[class]android.widget.EditText[resource_id]sms_verify_new-keyboardInputHidden[text][enabled,,]",
+      "view_str": "08aa747ab9f262a467b6af134cd1631b",
+      "content_free_signature": "[class]android.widget.EditText[resource_id]sms_verify_new-keyboardInputHidden"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 1,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [
+        48
+      ],
+      "focused": false,
+      "bounds": [
+        [
+          60,
+          0
+        ],
+        [
+          1001,
+          -21771
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "",
+      "class": "android.view.View",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 43,
+      "temp_id": 47,
+      "size": "941*-21771",
+      "signature": "[class]android.view.View[resource_id]None[text][enabled,,]",
+      "view_str": "cc0f7ef46ad7d1aa46478b79a68c3df7",
+      "content_free_signature": "[class]android.view.View[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": false,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": true,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          418,
+          0
+        ],
+        [
+          645,
+          -21775
+        ]
+      ],
+      "resource_id": null,
+      "checked": false,
+      "text": "60\u79d2\u540e\u91cd\u65b0\u53d1\u9001",
+      "class": "android.widget.TextView",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 47,
+      "temp_id": 48,
+      "size": "227*-21775",
+      "signature": "[class]android.widget.TextView[resource_id]None[text]60\u79d2\u540e\u91cd\u65b0\u53d1\u9001[enabled,,]",
+      "view_str": "0e7b48c7dcf64c6ff457b5fcfb2076c4",
+      "content_free_signature": "[class]android.widget.TextView[resource_id]None"
+    },
+    {
+      "package": "com.baidu.netdisk",
+      "visible": true,
+      "checkable": false,
+      "child_count": 0,
+      "editable": false,
+      "clickable": false,
+      "is_password": false,
+      "focusable": false,
+      "enabled": true,
+      "content_description": null,
+      "children": [],
+      "focused": false,
+      "bounds": [
+        [
+          0,
+          54
+        ],
+        [
+          1440,
+          153
+        ]
+      ],
+      "resource_id": "com.baidu.netdisk:id/sapi_title_layout",
+      "checked": false,
+      "text": null,
+      "class": "android.widget.RelativeLayout",
+      "scrollable": false,
+      "selected": false,
+      "long_clickable": false,
+      "parent": 3,
+      "temp_id": 49,
+      "size": "1440*99",
+      "signature": "[class]android.widget.RelativeLayout[resource_id]com.baidu.netdisk:id/sapi_title_layout[text]None[enabled,,]",
+      "view_str": "0032a8deb3118a667bec18c5eecedcfc",
+      "content_free_signature": "[class]android.widget.RelativeLayout[resource_id]com.baidu.netdisk:id/sapi_title_layout"
+    }
+  ]
+}

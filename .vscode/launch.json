@@ -38,13 +38,18 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "Python: Debug json",
+      "name": "Python: Debug convert",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/scan_fields.py",
+      "program": "${workspaceFolder}/convert.py",
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "justMyCode": false,
+      "args": [
+        "-b", "com.ericple.ohbill",
+        "-i", "droidbot_events",
+        "-o", "test_results",
+      ]
     },
   ]
 }

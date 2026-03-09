@@ -81,3 +81,8 @@ droidbot-master/output/
 *.hap
 *.aab
 *.so
+
+.cache/
+
+*events/
+*results/
