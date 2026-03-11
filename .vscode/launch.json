@@ -51,5 +51,18 @@
         "-o", "test_results",
       ]
     },
+    {
+      "name": "Python: Debug expand",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/expand_event_view_tree.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "args": [
+        "-i", "baidunetdisk_1000",
+        "-o", "expand_results",
+      ]
+    },
   ]
 }

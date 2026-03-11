@@ -124,10 +124,10 @@ def build_component_from_view(view: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
     xyxy = view.get("bounds")
     return {
-        "id": view.get("resource_id") or "",  
+        "id": "",  
         "key": "",
-        "text": view.get("type") or "",
-        "type": view.get("class") or "",
+        "text": "",
+        # "type": view.get("class") or "",
         "bounds": xyxy,
         "origBounds": xyxy,
         "checkable": bool(view.get("checkable", False)),
