@@ -10,11 +10,12 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "args": [
-                "-a", "../apks/zhihu.apk",
-                "-o", "output/zhihu_50",
+                "--use-installed-app", 
+                "--app-package", "com.zhihu.android",
+                // "-o", "../out/zhihu_50",
                 "-count", "50",
                 "-is_emulator",
-                "-debug"
+                // "-debug"
             ]
     },
     {
@@ -29,10 +30,10 @@
       ],
       "args": [
         "-i", "com.ericple.ohbill",
-        "-o", "output/ohbill",
+        "-o", "out/ohbill",
         // "--debug",
-        "--policy", "replay",
-        "--report", "output\\photos\\2026-02-04-19-50-55",
+        // "--policy", "replay",
+        // "--report", "output\\photos\\2026-02-04-19-50-55",
       ],
       "sourceMaps": true,
       "console": "integratedTerminal"
@@ -46,8 +47,8 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "args": [
-        "-b", "com.ericple.ohbill",
-        "-i", "droidbot_events",
+        "-b", "com.baidu.netdisk.hmos",
+        "-i", "expand_results/events",
         "-o", "test_results",
       ]
     },

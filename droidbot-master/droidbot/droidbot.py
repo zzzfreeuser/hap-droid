@@ -44,7 +44,8 @@ class DroidBot(object):
                  master=None,
                  humanoid=None,
                  ignore_ad=False,
-                 replay_output=None):
+                 replay_output=None,
+                 skip_install=False):
         """
         initiate droidbot with configurations
         :return:
@@ -80,6 +81,7 @@ class DroidBot(object):
         self.humanoid = humanoid
         self.ignore_ad = ignore_ad
         self.replay_output = replay_output
+        self.skip_install = skip_install
 
         self.enabled = True
 
@@ -144,8 +146,10 @@ class DroidBot(object):
 
             if not self.enabled:
                 return
-            self.device.install_app(self.app)
-
+            if not self.skip_install:
+                self.device.install_app(self.app)
+            else:
+                self.logger.info("Skip install step (using installed-app mode).")
             if not self.enabled:
                 return
             self.env_manager.deploy()
@@ -186,7 +190,7 @@ class DroidBot(object):
             self.device.disconnect()
         if not self.keep_env:
             self.device.tear_down()
-        if not self.keep_app:
+        if not self.keep_app and not self.skip_install:
             self.device.uninstall_app(self.app)
         if hasattr(self.input_manager.policy, "master") and \
            self.input_manager.policy.master:

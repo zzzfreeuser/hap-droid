@@ -19,9 +19,10 @@ import subprocess
 import argparse
 import json
 import re
+import copy
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 # -----------------------------
 # 基础数据结构
@@ -113,23 +114,38 @@ def center_from_view(view: Dict[str, Any], src_w: int, src_h: int, dst_w: int, d
         return None
     x1, y1, x2, y2 = xyxy
     x1, y1, x2, y2 = normalize_bounds(x1, y1, x2, y2, src_w, src_h, dst_w, dst_h)
-    view["bounds"] = [{'x': x1, 'y': y1}, {'x': x1, 'y': y2}]  # 更新 view 中的 bounds 为规范化后的坐标
+    view["bounds"] = [{'x': x1, 'y': y1}, {'x': x2, 'y': y2}]  # 更新 view 中的 bounds 为规范化后的坐标
     return {"x": (x1 + x2) // 2, "y": (y1 + y2) // 2}
   
 
-def build_component_from_view(view: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """
-    将 DroidBot view 转成 HapTest component(精简版)
-    只保留 replay 需要的常用字段。
-    """
-    xyxy = view.get("bounds")
+def _normalize_view_bounds_inplace(view: Dict[str, Any], src_w: int, src_h: int, dst_w: int, dst_h: int) -> None:
+    """递归归一化 view 树中每个节点的 bounds。"""
+    xyxy = parse_bounds_to_xyxy(view.get("bounds"))
+    if xyxy:
+        x1, y1, x2, y2 = normalize_bounds(*xyxy, src_w, src_h, dst_w, dst_h)
+        view["bounds"] = [{"x": x1, "y": y1}, {"x": x2, "y": y2}]
+
+    children = view.get("children", [])
+    if isinstance(children, list):
+        for child in children:
+            if isinstance(child, dict):
+                _normalize_view_bounds_inplace(child, src_w, src_h, dst_w, dst_h)
+
+
+def _view_to_component_tree(view: Dict[str, Any]) -> Dict[str, Any]:
+    """把已展开的 view 树递归映射为 HapTest component 树。"""
+    children_comp = []
+    for child in view.get("children", []):
+        if isinstance(child, dict):
+            children_comp.append(_view_to_component_tree(child))
+
     return {
-        "id": "",  
+        "id": "",
         "key": "",
         "text": "",
-        # "type": view.get("class") or "",
-        "bounds": xyxy,
-        "origBounds": xyxy,
+        "type": "",
+        "bounds": view.get("bounds") or [],
+        "origBounds": view.get("bounds") or [],
         "checkable": bool(view.get("checkable", False)),
         "checked": bool(view.get("checked", False)),
         "clickable": bool(view.get("clickable", False)),
@@ -140,8 +156,23 @@ def build_component_from_view(view: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "scrollable": bool(view.get("scrollable", False)),
         "selected": bool(view.get("selected", False)),
         "visible": bool(view.get("visible", True)),
-        "children": [],
+        "children": children_comp,
     }
+
+
+def build_component_from_view(
+    view: Dict[str, Any],
+    src_w: int, src_h: int,
+    dst_w: int, dst_h: int
+) -> Optional[Dict[str, Any]]:
+    """将 DroidBot view（含已展开 children）转成 HapTest component（递归）。"""
+    if not isinstance(view, dict):
+        return None
+
+    # 用副本，避免污染原事件 JSON
+    v = copy.deepcopy(view)
+    _normalize_view_bounds_inplace(v, src_w, src_h, dst_w, dst_h)
+    return _view_to_component_tree(v)
 
 
 def parse_am_start_intent(intent: str) -> Tuple[str, str]:
@@ -170,7 +201,7 @@ def parse_force_stop_intent(intent: str) -> str:
 # -----------------------------
 # 核心映射：DroidBot event -> HapTest event
 # -----------------------------
-def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str, 
+def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
                                  W_H: int, H_H: int, W_D: int, H_D: int) -> Optional[Dict[str, Any]]:
     """
     将单条 DroidBot event 映射成 HapTest event(createEventFromJson 可识别)
@@ -218,7 +249,7 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
 
         event_obj: Dict[str, Any] = {"type": "TouchEvent"}
         if view:
-            comp = build_component_from_view(view)
+            comp = build_component_from_view(view, W_D, H_D, W_H, H_H)
             if comp:
                 event_obj["component"] = comp
         if point:
@@ -236,7 +267,7 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
 
         event_obj = {"type": "LongTouchEvent"}
         if view:
-            comp = build_component_from_view(view)
+            comp = build_component_from_view(view, W_D, H_D, W_H, H_H)
             if comp:
                 event_obj["component"] = comp
         if point:
@@ -254,7 +285,7 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
             point = center_from_view(view, W_D, H_D, W_H, H_H)
             if point:
                 event_obj["point"] = point
-            comp = build_component_from_view(view)
+            comp = build_component_from_view(view, W_D, H_D, W_H, H_H)
             if comp:
                 event_obj["component"] = comp
                 return event_obj
@@ -273,9 +304,9 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
     #     # 这里用 ScrollEvent 做保守映射（方向缺失时默认 0）。
     #     event_obj: Dict[str, Any] = {
     #         "type": "ScrollEvent",
-    #         "direct": int(d_event.get("direction", 0)) if str(d_event.get("direction", "")).isdigit() else 0,
-    #         "step": int(d_event.get("step", 60)),
-    #         "speed": int(d_event.get("speed", 40000)),
+    #         "direct": int(d_event.get("direction", 0)) if str(d.event.get("direction", "")).isdigit() else 0,
+    #         "step": int(d.event.get("step", 60)),
+    #         "speed": int(d.event.get("speed", 40000)),
     #     }
     #     if view:
     #         comp = build_component_from_view(view)
@@ -303,7 +334,7 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
             point = center_from_view(view, W_D, H_D, W_H, H_H)
             if point:
                 event_obj["point"] = point
-            comp = build_component_from_view(view)
+            comp = build_component_from_view(view, W_D, H_D, W_H, H_H)
             if comp:
                 event_obj["component"] = comp
         return event_obj
@@ -318,7 +349,7 @@ def build_hap_transition_like_json(
 ) -> Dict[str, Any]:
     """
     构造 HapTest replay 可读取的 transition 风格 JSON。
-    replay 主要用 event；from/to 这里补齐最小结构。
+    replay 主要用 event;from/to 这里补齐最小结构。
     """
     return {
         "from": {

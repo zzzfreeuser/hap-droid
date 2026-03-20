@@ -116,3 +116,51 @@ class App(object):
             sha1.update(data)
             sha256.update(data)
         return [md5.hexdigest(), sha1.hexdigest(), sha256.hexdigest()]
+
+
+class InstalledApp(object):
+    """
+    已安装应用描述（无 APK 文件）
+    仅依赖 package/activity， 不使用 androguard
+    """
+    def __init__(self, package_name: str, main_activity: str = None, output_dir: str = None):
+        self.logger = logging.getLogger(self.__class__.__name__)
+        self.app_path = None
+        self.output_dir = output_dir
+        if output_dir and not os.path.isdir(output_dir):
+            os.makedirs(output_dir)
+
+        self.package_name = package_name
+        self.main_activity = main_activity
+        self.app_name = package_name
+
+        # 与 App 接口保持兼容的基础字段
+        self.permissions = []
+        self.activities = []
+        self.possible_broadcasts = set()
+        self.dumpsys_main_activity = None
+        self.hashes = ["", "", ""]
+
+    def get_package_name(self):
+        return self.package_name
+
+    def get_main_activity(self):
+        return self.main_activity
+
+    def get_start_intent(self):
+        suffix = self.package_name
+        if self.main_activity:
+            suffix = f"{self.package_name}/{self.main_activity}"
+        return Intent(suffix=suffix)
+
+    def get_stop_intent(self):
+        return Intent(prefix="force-stop", suffix=self.package_name)
+
+    def get_hashes(self):
+        return self.hashes
+
+    def get_permissions(self):
+        return self.permissions
+
+    def get_possible_broadcasts(self):
+        return self.possible_broadcasts

@@ -1,11 +1,50 @@
 # helper file of droidbot
 # it parses command arguments and send the options to droidbot
 import argparse
+import subprocess
+import tempfile
+from pathlib import Path
 from droidbot import input_manager
 from droidbot import input_policy
 from droidbot import env_manager
 from droidbot import DroidBot
 from droidbot.droidmaster import DroidMaster
+
+
+def _adb_cmd(device_serial: str | None, *args: str) -> list[str]:
+    cmd = ["adb"]
+    if device_serial:
+        cmd += ["-s", device_serial]
+    cmd += list(args)
+    return cmd
+
+
+def _run_cmd(cmd: list[str]) -> str:
+    p = subprocess.run(cmd, capture_output=True, text=True)
+    if p.returncode != 0:
+        raise RuntimeError(f"命令执行失败: {' '.join(cmd)}\n{p.stderr.strip()}")
+    return p.stdout
+
+
+def pull_installed_base_apk(device_serial: str | None, package_name: str) -> str:
+    """
+    从已安装应用拉取 base.apk 到本地临时目录，返回本地 apk 路径。
+    """
+    out = _run_cmd(_adb_cmd(device_serial, "shell", "pm", "path", package_name))
+    lines = [ln.strip() for ln in out.splitlines() if ln.strip().startswith("package:")]
+    if not lines:
+        raise RuntimeError(f"设备上未找到已安装应用: {package_name}")
+
+    remote_apks = [ln.replace("package:", "", 1).strip() for ln in lines]
+    base_apk = next((p for p in remote_apks if p.endswith("/base.apk") or p.endswith("base.apk")), remote_apks[0])
+
+    tmp_dir = Path(tempfile.mkdtemp(prefix="droidbot_installed_apk_"))
+    local_apk = tmp_dir / f"{package_name}.apk"
+    _run_cmd(_adb_cmd(device_serial, "pull", base_apk, str(local_apk)))
+
+    if not local_apk.exists():
+        raise RuntimeError(f"拉取 APK 失败: {local_apk}")
+    return str(local_apk)
 
 
 def parse_args():
@@ -17,8 +56,12 @@ def parse_args():
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("-d", action="store", dest="device_serial", required=False,
                         help="The serial number of target device (use `adb devices` to find)")
-    parser.add_argument("-a", action="store", dest="apk_path", required=True,
+    parser.add_argument("-a", action="store", dest="apk_path", required=False,
                         help="The file path to target APK")
+    parser.add_argument("--use-installed-app", action="store_true", dest="use_installed_app",
+                        help="从设备已安装应用拉取 APK（仍用 androguard 分析），并跳过安装步骤")
+    parser.add_argument("--app-package", action="store", dest="app_package",
+                        help="已安装应用包名，如 com.baidu.netdisk")
     parser.add_argument("-o", action="store", dest="output_dir",
                         help="directory of output")
     # parser.add_argument("-env", action="store", dest="env_policy",
@@ -101,9 +144,26 @@ def main():
     """
     opts = parse_args()
     import os
-    if not os.path.exists(opts.apk_path):
-        print("APK does not exist.")
+
+    if not opts.apk_path and not opts.use_installed_app:
+        print("请提供 -a <apk>，或使用 --use-installed-app --app-package <pkg>")
         return
+
+    if opts.use_installed_app:
+        if not opts.app_package:
+            print("使用 --use-installed-app 时必须提供 --app-package")
+            return
+        try:
+            opts.apk_path = pull_installed_base_apk(opts.device_serial, opts.app_package)
+            print(f"[INFO] 已拉取 APK: {opts.apk_path}")
+        except Exception as e:
+            print(f"[ERROR] {e}")
+            return
+    else:
+        if not os.path.exists(opts.apk_path):
+            print("APK does not exist.")
+            return
+
     if not opts.output_dir and opts.cv_mode:
         print("To run in CV mode, you need to specify an output dir (using -o option).")
 
@@ -116,6 +176,9 @@ def main():
         start_mode = "normal"
 
     if start_mode == "master":
+        if opts.use_installed_app:
+            print("当前补丁仅支持 normal 模式的已安装应用流程，master 模式请使用 -a。")
+            return
         droidmaster = DroidMaster(
             app_path=opts.apk_path,
             is_emulator=opts.is_emulator,
@@ -165,7 +228,8 @@ def main():
             master=opts.master,
             humanoid=opts.humanoid,
             ignore_ad=opts.ignore_ad,
-            replay_output=opts.replay_output)
+            replay_output=opts.replay_output,
+            skip_install=opts.use_installed_app)
         droidbot.start()
     return
 
