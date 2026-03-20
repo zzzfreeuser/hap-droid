@@ -1,0 +1,11 @@
+.vscode/
+dist/
+lib/
+node_modules/
+package-lock.json
+*.log
+*.log.*
+*.tgz
+out/
+out[0-9]*/
+haps/
