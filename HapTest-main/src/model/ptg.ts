@@ -279,9 +279,54 @@ export class PTG {
         try {
             const dot = toDot(dotGraph);
             fs.writeFileSync(path.join(output, 'ptg.dot'), dot);
+            // this.dumpHtml(output, dotGraph);
         } catch(error) {
             
         }
+    }
+
+    /**
+     * 生成网页可视化文件（ptg.html）
+     * 依赖 d3-graphviz 在线脚本，打开 html 即可查看
+     */
+    dumpHtml(outputDir: string, dotGraph: Digraph): void {
+        const dotPath = path.join(outputDir, 'ptg.dot');
+        const htmlPath = path.join(outputDir, 'ptg.html');
+
+        // 复用你现有 dot 导出逻辑（如果你当前方法名不同，替换成实际方法）
+        // 例如：const dotContent = this.toDot();
+        const dotContent = toDot(dotGraph);
+
+        fs.writeFileSync(dotPath, dotContent, { encoding: 'utf-8' });
+
+        const html = `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>HapTest PTG</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+    #toolbar { padding: 10px; border-bottom: 1px solid #ddd; }
+    #graph { width: 100vw; height: calc(100vh - 50px); overflow: auto; }
+    textarea { width: 100%; height: 120px; font-family: Consolas, monospace; }
+  </style>
+  <script src="https://unpkg.com/d3@7"></script>
+  <script src="https://unpkg.com/@hpcc-js/wasm@2.16.2/dist/index.min.js"></script>
+  <script src="https://unpkg.com/d3-graphviz@5.1.0/build/d3-graphviz.min.js"></script>
+</head>
+<body>
+  <div id="toolbar">
+    <strong>HapTest PTG 可视化</strong>
+  </div>
+  <div id="graph"></div>
+  <script>
+    const dot = ${JSON.stringify(dotContent)};
+    d3.select("#graph").graphviz().zoom(true).renderDot(dot);
+  </script>
+</body>
+</html>`;
+
+        fs.writeFileSync(htmlPath, html, { encoding: 'utf-8' });
     }
 
     private addNode(page: Page) {
@@ -309,4 +354,120 @@ export class PTG {
     getExploredAbilities(): string[] {
         return Array.from(this.exploredAbility);
     }
+
+    // output_ptg(output: string) {
+
+    //     function list_to_html_table(dict_data: Map<string, string>[]): string {
+    //         let table = "<table class=\"table\">\n"
+    //         for (const [key, value] of dict_data) {
+    //             table += "<tr><th>" + key + "</th><td>" + value + "</td></tr>\n";
+    //         }
+    //         table += "</table>"
+    //         return table
+
+    //     const utg_file_path = path.join(output, "utg.js");
+    //     let utg_nodes = []
+    //     let utg_edges = []
+    //     for state_str in self.G.nodes():
+    //         state = self.G.nodes[state_str]["state"]
+    //         package_name = state.foreground_activity.split("/")[0]
+    //         activity_name = state.foreground_activity.split("/")[1]
+    //         short_activity_name = activity_name.split(".")[-1]
+
+    //         state_desc = list_to_html_table([
+    //             ("package", package_name),
+    //             ("activity", activity_name),
+    //             ("state_str", state.state_str),
+    //             ("structure_str", state.structure_str)
+    //         ])
+
+    //         utg_node = {
+    //             "id": state_str,
+    //             "shape": "image",
+    //             "image": os.path.relpath(state.screenshot_path, self.device.output_dir),
+    //             "label": short_activity_name,
+    //             # "group": state.foreground_activity,
+    //             "package": package_name,
+    //             "activity": activity_name,
+    //             "state_str": state_str,
+    //             "structure_str": state.structure_str,
+    //             "title": state_desc,
+    //             "content": "\n".join([package_name, activity_name, state.state_str, state.search_content])
+    //         }
+
+    //         if state.state_str == self.first_state_str:
+    //             utg_node["label"] += "\n<FIRST>"
+    //             utg_node["font"] = "14px Arial red"
+    //         if state.state_str == self.last_state_str:
+    //             utg_node["label"] += "\n<LAST>"
+    //             utg_node["font"] = "14px Arial red"
+
+    //         utg_nodes.append(utg_node)
+
+    //     for state_transition in self.G.edges():
+    //         from_state = state_transition[0]
+    //         to_state = state_transition[1]
+
+    //         events = self.G[from_state][to_state]["events"]
+    //         event_short_descs = []
+    //         event_list = []
+
+    //         for event_str, event_info in sorted(iter(events.items()), key=lambda x: x[1]["id"]):
+    //             event_short_descs.append((event_info["id"], event_str))
+    //             if self.device.adapters[self.device.minicap]:
+    //                 view_images = ["views/view_" + view["view_str"] + ".jpg"
+    //                                for view in event_info["event"].get_views()]
+    //             else:
+    //                 view_images = ["views/view_" + view["view_str"] + ".png"
+    //                                for view in event_info["event"].get_views()]
+    //             event_list.append({
+    //                 "event_str": event_str,
+    //                 "event_id": event_info["id"],
+    //                 "event_type": event_info["event"].event_type,
+    //                 "view_images": view_images
+    //             })
+
+    //         utg_edge = {
+    //             "from": from_state,
+    //             "to": to_state,
+    //             "id": from_state + "-->" + to_state,
+    //             "title": list_to_html_table(event_short_descs),
+    //             "label": ", ".join([str(x["event_id"]) for x in event_list]),
+    //             "events": event_list
+    //         }
+
+    //         # # Highlight last transition
+    //         # if state_transition == self.last_transition:
+    //         #     utg_edge["color"] = "red"
+
+    //         utg_edges.append(utg_edge)
+
+    //     utg = {
+    //         "nodes": utg_nodes,
+    //         "edges": utg_edges,
+
+    //         "num_nodes": len(utg_nodes),
+    //         "num_edges": len(utg_edges),
+    //         "num_effective_events": len(self.effective_event_strs),
+    //         "num_reached_activities": len(self.reached_activities),
+    //         "test_date": self.start_time.strftime("%Y-%m-%d %H:%M:%S"),
+    //         "time_spent": (datetime.datetime.now() - self.start_time).total_seconds(),
+    //         "num_transitions": self.num_transitions,
+
+    //         "device_serial": self.device.serial,
+    //         "device_model_number": self.device.get_model_number(),
+    //         "device_sdk_version": self.device.get_sdk_version(),
+
+    //         "app_sha256": self.app.hashes[2],
+    //         "app_package": self.app.package_name,
+    //         "app_main_activity": self.app.main_activity,
+    //         "app_num_total_activities": len(self.app.activities),
+    //     }
+
+    //     utg_json = json.dumps(utg, indent=2)
+    //     utg_file.write("var utg = \n")
+    //     utg_file.write(utg_json)
+    //     utg_file.close()
+    // }
+        
 }

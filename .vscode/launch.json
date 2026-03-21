@@ -29,8 +29,8 @@
         "ts-node/register"
       ],
       "args": [
-        "-i", "com.ericple.ohbill",
-        "-o", "out/ohbill",
+        "-i", "com.example.distributedcontacts",
+        "-o", "..\\out\\contacts",
         // "--debug",
         // "--policy", "replay",
         // "--report", "output\\photos\\2026-02-04-19-50-55",
@@ -63,6 +63,18 @@
       "args": [
         "-i", "baidunetdisk_1000",
         "-o", "expand_results",
+      ]
+    },
+    {
+      "name": "Python: Debug dot to utg.js",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/dot_to_utg_js.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "args": [
+        "out\\contacts\\2026-03-19-23-57-27\\ptg.dot"
       ]
     },
   ]

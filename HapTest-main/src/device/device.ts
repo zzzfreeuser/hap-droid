@@ -65,6 +65,15 @@ export class Device implements EventSimulator {
         fs.mkdirSync(this.temp, { recursive: true });
         this.arkuiInspector = new ArkUIInspector(this.hdc);
         this.lastFaultlogs = this.collectFaultLogger();
+        const htmlIndexPath = 'res/index.html';
+        const stylesheetsPath = 'res/stylesheets';
+        const targetStylesheetsDir = path.join(this.output, 'stylesheets');
+                
+        if (fs.existsSync(targetStylesheetsDir)) {
+            fs.rmSync(targetStylesheetsDir, { recursive: true, force: true });
+        }
+        fs.copyFileSync(htmlIndexPath, this.output + '/index.html');
+        fs.cpSync(stylesheetsPath, targetStylesheetsDir, { recursive: true });
     }
 
     async connect(hap: Hap) {
