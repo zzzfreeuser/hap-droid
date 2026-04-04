@@ -87,7 +87,7 @@ export abstract class PTGPolicy extends Policy {
             // transition to StopState
             this.ptg.addTransitionToStop(this.currentPage);
             this.ptg.dumpSvg(this.device.getOutput(), 'http://localhost:3001');
-        }
+        } 
     }
 
     getPTG(): PTG {

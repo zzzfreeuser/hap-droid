@@ -29,11 +29,11 @@
         "ts-node/register"
       ],
       "args": [
-        "-i", "com.example.distributedcontacts",
-        "-o", "..\\out\\contacts",
+        "-i", "com.tencent.hm.qqmusic",
+        "-o", "..\\out\\qqmusic_llm_converted",
         // "--debug",
-        // "--policy", "replay",
-        // "--report", "output\\photos\\2026-02-04-19-50-55",
+        "--policy", "replay",
+        "--report", "..\\out\\qqmusic_30_llm\\converts",
       ],
       "sourceMaps": true,
       "console": "integratedTerminal"
@@ -47,9 +47,9 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "args": [
-        "-b", "com.baidu.netdisk.hmos",
-        "-i", "expand_results/events",
-        "-o", "test_results",
+        "-b", "com.tencent.hm.qqmusic",
+        "-i", "D:\\GithubProjects\\hap-droid\\out\\qqmusic_50\\events",
+        "-o", "D:\\GithubProjects\\hap-droid\\out\\qqmusic_50\\test_results",
       ]
     },
     {
@@ -75,6 +75,19 @@
       "justMyCode": false,
       "args": [
         "out\\contacts\\2026-03-19-23-57-27\\ptg.dot"
+      ]
+    },
+    {
+      "name": "Python: Debug expand states to tree",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/expand_state_tree.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "args": [
+        "--input", "D:\\GithubProjects\\hap-droid\\out\\xhs_20",
+        // "-o", "D:\\GithubProjects\\hap-droid\\out\\xhs_20",
       ]
     },
   ]

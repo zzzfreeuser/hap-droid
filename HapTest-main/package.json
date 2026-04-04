@@ -16,6 +16,7 @@
   "author": "",
   "license": "Apache License, Version 2.0",
   "dependencies": {
+    "@google/genai": "^1.48.0",
     "@ts-graphviz/adapter": "^2.0.3",
     "@types/ws": "^8.5.12",
     "adm-zip": "^0.5.15",

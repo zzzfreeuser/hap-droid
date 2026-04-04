@@ -63,8 +63,8 @@ def normalize_bounds(
     """
     将矩形边界映射到目标设备
     """
-    nx1, ny1 = normalize_point(x1, y1, src_w, src_h, dst_w, dst_h)
-    nx2, ny2 = normalize_point(x2, y2, src_w, src_h, dst_w, dst_h)
+    nx1, ny1 = x1, y1
+    nx2, ny2 = x2, y2
     return nx1, ny1, nx2, ny2
 
 def read_json(fp: Path) -> Optional[Dict[str, Any]]:
@@ -113,7 +113,7 @@ def center_from_view(view: Dict[str, Any], src_w: int, src_h: int, dst_w: int, d
     if not xyxy:
         return None
     x1, y1, x2, y2 = xyxy
-    x1, y1, x2, y2 = normalize_bounds(x1, y1, x2, y2, src_w, src_h, dst_w, dst_h)
+    # x1, y1, x2, y2 = normalize_bounds(x1, y1, x2, y2, src_w, src_h, dst_w, dst_h)
     view["bounds"] = [{'x': x1, 'y': y1}, {'x': x2, 'y': y2}]  # 更新 view 中的 bounds 为规范化后的坐标
     return {"x": (x1 + x2) // 2, "y": (y1 + y2) // 2}
   
@@ -142,7 +142,7 @@ def _view_to_component_tree(view: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "id": "",
         "key": "",
-        "text": "",
+        "text": view.get("text", ""),
         "type": "",
         "bounds": view.get("bounds") or [],
         "origBounds": view.get("bounds") or [],
@@ -165,7 +165,7 @@ def build_component_from_view(
     src_w: int, src_h: int,
     dst_w: int, dst_h: int
 ) -> Optional[Dict[str, Any]]:
-    """将 DroidBot view（含已展开 children）转成 HapTest component（递归）。"""
+    """将 DroidBot view(含已展开 children)转成 HapTest component(递归)。"""
     if not isinstance(view, dict):
         return None
 
@@ -202,7 +202,7 @@ def parse_force_stop_intent(intent: str) -> str:
 # 核心映射：DroidBot event -> HapTest event
 # -----------------------------
 def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
-                                 W_H: int, H_H: int, W_D: int, H_D: int) -> Optional[Dict[str, Any]]:
+                                 W_H: int=1, H_H: int=1, W_D: int=1, H_D: int=1) -> Optional[Dict[str, Any]]:
     """
     将单条 DroidBot event 映射成 HapTest event(createEventFromJson 可识别)
     """
@@ -242,7 +242,8 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
     if et == "touch":
         point = None
         if isinstance(d_event.get("x"), (int, float)) and isinstance(d_event.get("y"), (int, float)):
-            nx, ny = normalize_point(int(d_event["x"]), int(d_event["y"]), W_D, H_D, W_H, H_H)
+            # nx, ny = normalize_point(int(d_event["x"]), int(d_event["y"]), W_D, H_D, W_H, H_H)
+            nx, ny = int(d_event["x"]), int(d_event["y"])
             point = {"x": nx, "y": ny}
         elif view:
             point = center_from_view(view, W_D, H_D, W_H, H_H)
@@ -260,7 +261,7 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
     if et in ("long_touch", "long_click"):
         point = None
         if isinstance(d_event.get("x"), (int, float)) and isinstance(d_event.get("y"), (int, float)):
-            nx, ny = normalize_point(int(d_event["x"]), int(d_event["y"]), W_D, H_D, W_H, H_H)
+            nx, ny = int(d_event["x"]), int(d_event["y"])
             point = {"x": nx, "y": ny}
         elif view:
             point = center_from_view(view, W_D, H_D, W_H, H_H)
@@ -346,6 +347,7 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
 def build_hap_transition_like_json(
     hap_event: Dict[str, Any],
     droid_json: Dict[str, Any],
+    view_tree: Dict[str, Any]
 ) -> Dict[str, Any]:
     """
     构造 HapTest replay 可读取的 transition 风格 JSON。
@@ -357,6 +359,9 @@ def build_hap_transition_like_json(
             "pagePath": "",
             "bundleName": "",
             "abilityName": "",
+            'viewTree': {
+                'root': view_tree
+            }
         },
         "event": hap_event,
         "to": {
@@ -379,16 +384,17 @@ def convert(
 ) -> ConvertStats:
     stats = ConvertStats()
 
+    droid_dir = droid_dir / "events"
     files = sorted(droid_dir.glob("event_*.json"))
     events_out_dir = out_dir / "events"
     events_out_dir.mkdir(parents=True, exist_ok=True)
 
-    res = subprocess.run('hdc shell hidumper -s RenderService -a screen', capture_output=True)
-    m = re.search(r"render resolution=(\d+)x(\d+)", res.stdout.decode())
-    W_H, H_H = (int(m.group(1)), int(m.group(2)))
-    res = subprocess.run('adb shell wm size', capture_output=True)
-    m = re.search(r"Physical size:\s*(\d+)x(\d+)", res.stdout.decode())
-    W_D, H_D = (int(m.group(1)), int(m.group(2)))
+    # res = subprocess.run('hdc shell hidumper -s RenderService -a screen', capture_output=True)
+    # m = re.search(r"render resolution=(\d+)x(\d+)", res.stdout.decode())
+    # W_H, H_H = (int(m.group(1)), int(m.group(2)))
+    # res = subprocess.run('adb shell wm size', capture_output=True)
+    # m = re.search(r"Physical size:\s*(\d+)x(\d+)", res.stdout.decode())
+    # W_D, H_D = (int(m.group(1)), int(m.group(2)))
 
     for fp in files:
         stats.total += 1
@@ -407,7 +413,14 @@ def convert(
             continue
 
         hap_event = map_droid_event_to_hap_event(d_event, bundle_name=bundle_name, 
-                                                 W_H=W_H, H_H=H_H, W_D=W_D, H_D=H_D)
+                                                #  W_H=W_H, H_H=H_H, W_D=W_D, H_D=H_D
+                                                 )
+        
+        if hap_event is not None:
+            hap_event['view_child_index_path'] = d_event.get('view_child_index_path', [])
+            hap_event["view_path_classes"] = d_event.get("view_path_classes", [])
+            hap_event["view_path_node_chain"] = d_event.get("view_path_node_chain", [])
+
         if hap_event is None:
             stats.skipped += 1
             stats.warnings += 1
@@ -415,7 +428,7 @@ def convert(
             print(f"[WARN] 跳过未支持事件类型: {et} @ {fp.name}")
             continue
 
-        out_obj = build_hap_transition_like_json(hap_event, data)
+        out_obj = build_hap_transition_like_json(hap_event, data, d_event.get('viewTree', {}))
 
         # 输出文件名：transition_<原tag格式化>.json
         tag = str(data.get("tag", fp.stem.replace("event_", "")))

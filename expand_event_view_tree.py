@@ -62,6 +62,14 @@ def build_state_index(states_dir: Path) -> Dict[str, Dict[str, Any]]:
             index[state_str] = data
     return index
 
+def build_tree_index(tree_dir: Path) -> Dict[int, Dict[str, Any]]:
+    index: Dict[int, Dict[str, Any]] = {}
+    for fp in sorted(tree_dir.glob("tree_state_*.json")):
+        data = read_json(fp)
+        if not isinstance(data, dict):
+            continue
+
+
 
 def build_view_index(state_json: Dict[str, Any]) -> Dict[int, Dict[str, Any]]:
     """
@@ -109,6 +117,7 @@ def expand_view_from_state(
 
     raw = view_index.get(view_id)
     if raw is None:
+        visited.remove(view_id)
         return {"temp_id": view_id, "children": [], "_missing_in_state": True}
 
     node = copy.deepcopy(raw)
@@ -130,6 +139,139 @@ def expand_view_from_state(
     visited.remove(view_id)
     return node
 
+def build_child_index_maps(
+    view_index: Dict[int, Dict[str, Any]],
+) -> Tuple[Dict[Tuple[int, int], int], Dict[int, int]]:
+    """
+    返回:
+    1) (parent_id, child_id) -> child_index
+    2) child_id -> parent_id
+    """
+    parent_child_to_index: Dict[Tuple[int, int], int] = {}
+    child_to_parent: Dict[int, int] = {}
+
+    for pid, pnode in view_index.items():
+        raw_children = pnode.get("children", [])
+        if not isinstance(raw_children, list):
+            continue
+
+        for idx, cid_raw in enumerate(raw_children):
+            cid = to_int_id(cid_raw)
+            if cid is None:
+                continue
+            parent_child_to_index[(pid, cid)] = idx
+            child_to_parent[cid] = pid
+
+    return parent_child_to_index, child_to_parent
+
+
+def build_view_child_index_path_from_state(
+    target_view_id: int,
+    view_index: Dict[int, Dict[str, Any]],
+) -> Tuple[List[int], List[str], List[int]]:
+    """
+    返回:
+    1) child_index_path: 从 root 到 target 的“第几个孩子”路径，如 [0, 0, 2, 1]
+    2) path_classes: root->target 每层 class
+    3) path_node_ids: root->target 节点 id（仅调试用，可不落盘）
+    """
+    parent_child_to_index, child_to_parent = build_child_index_maps(view_index)
+
+    # 先回溯 root->target 的节点链
+    node_chain: List[int] = []
+    seen: Set[int] = set()
+    cur: Optional[int] = target_view_id
+
+    while cur is not None and cur not in seen and cur in view_index:
+        seen.add(cur)
+        node_chain.append(cur)
+
+        p = child_to_parent.get(cur)
+        if p is None:
+            # 再兜底用 parent 字段
+            p = to_int_id(view_index[cur].get("parent"))
+            if p is None or p == -1:
+                break
+        cur = p if p in view_index else None
+
+    node_chain.reverse()  # root -> target
+
+    # 根据相邻父子节点求 child_index_path
+    child_index_path: List[int] = []
+    for i in range(1, len(node_chain)):
+        pid = node_chain[i - 1]
+        cid = node_chain[i]
+        idx = parent_child_to_index.get((pid, cid), -1)
+        child_index_path.append(idx)
+
+    path_classes: List[str] = []
+    for vid in node_chain:
+        cls = view_index.get(vid, {}).get("class")
+        path_classes.append(cls if isinstance(cls, str) else "")
+
+    return child_index_path, path_classes, node_chain
+
+# 放在 expand_event_view 上面
+
+def resolve_event_view_id(
+    event_view: Dict[str, Any],
+    view_index: Dict[int, Dict[str, Any]],
+) -> Optional[int]:
+    """
+    尝试确定 event.view 对应的 temp_id
+    优先级:
+    1) event.view.temp_id
+    2) 用 view_str / signature / content_free_signature 在 state 中匹配
+    """
+    rid = to_int_id(event_view.get("temp_id"))
+    if rid is not None and rid in view_index:
+        return rid
+
+    for key in ("view_str", "signature", "content_free_signature"):
+        v = event_view.get(key)
+        if not isinstance(v, str) or not v:
+            continue
+        for vid, node in view_index.items():
+            if node.get(key) == v:
+                return vid
+
+    return None
+
+
+def build_view_path_from_state(
+    target_view_id: int,
+    view_index: Dict[int, Dict[str, Any]],
+) -> Tuple[List[int], List[str]]:
+    """
+    根据 parent 指针，从目标节点回溯到根，再反转得到 root->target 路径
+    返回:
+    - path_ids: [0, 1, 2, ... , target]
+    - path_classes: ["android.widget.FrameLayout", ...]
+    """
+    path_ids: List[int] = []
+    seen: Set[int] = set()
+    cur: Optional[int] = target_view_id
+
+    while cur is not None and cur not in seen:
+        seen.add(cur)
+        node = view_index.get(cur)
+        if node is None:
+            break
+
+        path_ids.append(cur)
+
+        parent_id = to_int_id(node.get("parent"))
+        if parent_id is None or parent_id == -1:
+            break
+        cur = parent_id
+
+    path_ids.reverse()
+    path_classes: List[str] = []
+    for vid in path_ids:
+        cls = view_index.get(vid, {}).get("class")
+        path_classes.append(cls if isinstance(cls, str) else "")
+
+    return path_ids, path_classes
 
 def expand_event_view(
     event_view: Dict[str, Any],
@@ -168,7 +310,7 @@ def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
     - 返回 (总事件数, 成功展开数, 跳过数)
     """
     events_dir = run_dir / "events"
-    states_dir = run_dir / "states"
+    states_dir = run_dir / "trees"
     out_events_dir = out_dir / "events"
 
     state_index = build_state_index(states_dir)
@@ -207,7 +349,32 @@ def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
 
         # 展开 event.view
         original_view = event_obj["view"]
+
+        # 先确定 event.view 在 state 中对应哪个节点
+        target_id = resolve_event_view_id(original_view, view_index)
+
+        # 展开树
         event_obj["view"] = expand_event_view(original_view, view_index)
+        event_obj['viewTree'] = state_json.get('viewTree', {})
+
+        # 记录路径（root -> target）
+        if target_id is not None:
+            child_index_path, path_classes, node_chain = build_view_child_index_path_from_state(target_id, view_index)
+
+            # 主输出：你要的“第几个孩子路径”
+            event_obj["view_child_index_path"] = child_index_path
+
+            # 可选：保留 class 路径用于解释与调试
+            event_obj["view_path_classes"] = path_classes
+
+            # 可选调试：节点链（可删）
+            event_obj["view_path_node_chain"] = node_chain
+                        # event_obj["view_path"] = " > ".join(path_classes)
+        else:
+            event_obj["view_child_index_path"] = []
+            event_obj["view_path_classes"] = []
+            # event_obj["view_path"] = ""
+
         data["event"] = event_obj
 
         write_json(out_events_dir / event_fp.name, data)
@@ -230,7 +397,7 @@ def main() -> None:
         type=Path,
         default=Path(r"d:\GithubProjects\hap-droid\baidunetdisk_1000_expanded"),
         dest="out_dir",
-        help="输出目录（会写入 events/）",
+        help="输出目录(会写入 events/)",
     )
     args = parser.parse_args()
 

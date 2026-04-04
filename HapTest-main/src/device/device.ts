@@ -258,7 +258,7 @@ export class Device implements EventSimulator {
             });
 
             if (components.length > 1) {
-                this.sendEvent(new TouchEvent(components[2]));
+                this.sendEvent(new TouchEvent(components[1]));
                 return true;
             }
         }
