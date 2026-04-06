@@ -19,6 +19,7 @@ import copy
 import json
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
+from datetime import datetime
 
 
 def read_json(path: Path) -> Optional[Dict[str, Any]]:
@@ -46,7 +47,6 @@ def to_int_id(value: Any) -> Optional[int]:
     except Exception:
         return None
 
-
 def build_state_index(states_dir: Path) -> Dict[str, Dict[str, Any]]:
     """
     建立 state_str -> state_json 的索引。
@@ -62,13 +62,59 @@ def build_state_index(states_dir: Path) -> Dict[str, Dict[str, Any]]:
             index[state_str] = data
     return index
 
-def build_tree_index(tree_dir: Path) -> Dict[int, Dict[str, Any]]:
-    index: Dict[int, Dict[str, Any]] = {}
-    for fp in sorted(tree_dir.glob("tree_state_*.json")):
+def parse_timestamp(time_str: str) -> Optional[datetime]:
+    """
+    解析时间戳字符串为 datetime 对象。
+    支持格式: "2026-04-05_201428" 等
+    """
+    try:
+        return datetime.strptime(time_str, "%Y-%m-%d_%H%M%S")
+    except Exception:
+        return None
+
+
+def build_state_index_by_time(states_dir: Path) -> List[Tuple[datetime, Dict[str, Any], str]]:
+    """
+    按时间戳建立 state 索引。
+    返回: [(时间戳, state_json, 文件名), ...] 按时间排序
+    """
+    states_list: List[Tuple[datetime, Dict[str, Any], str]] = []
+    
+    for fp in sorted(states_dir.glob("state_*.json")):
+        # 从文件名提取时间戳，如 "state_2026-04-05_201457.json"
+        stem = fp.stem  # "state_2026-04-05_201457"
+        time_str = stem.replace("state_", "")
+        
+        ts = parse_timestamp(time_str)
+        if ts is None:
+            print(f'解析时间戳失败: {time_str}')
+            continue
+        
         data = read_json(fp)
         if not isinstance(data, dict):
+            print(f'解析 JSON 失败: {fp}')
             continue
+        
+        states_list.append((ts, data, fp.name))
+    
+    states_list.sort(key=lambda x: x[0])
+    return states_list
 
+
+def find_nearest_state(
+    event_time: datetime,
+    states_list: List[Tuple[datetime, Dict[str, Any], str]],
+) -> Optional[Dict[str, Any]]:
+    """
+    根据事件时间戳，找到最近的最早的 state。
+    即: 找到时间戳 <= event_time 且最接近的 state。
+    """
+    candidates = [s for s in states_list if s[0] <= event_time]
+    if not candidates:
+        return None
+    
+    # 取最后一个（时间最近的且 <= event_time）
+    return candidates[-1][1]
 
 
 def build_view_index(state_json: Dict[str, Any]) -> Dict[int, Dict[str, Any]]:
@@ -171,7 +217,7 @@ def build_view_child_index_path_from_state(
 ) -> Tuple[List[int], List[str], List[int]]:
     """
     返回:
-    1) child_index_path: 从 root 到 target 的“第几个孩子”路径，如 [0, 0, 2, 1]
+    1) child_index_path: 从 root 到 target 的"第几个孩子"路径，如 [0, 0, 2, 1]
     2) path_classes: root->target 每层 class
     3) path_node_ids: root->target 节点 id（仅调试用，可不落盘）
     """
@@ -210,8 +256,6 @@ def build_view_child_index_path_from_state(
         path_classes.append(cls if isinstance(cls, str) else "")
 
     return child_index_path, path_classes, node_chain
-
-# 放在 expand_event_view 上面
 
 def resolve_event_view_id(
     event_view: Dict[str, Any],
@@ -304,16 +348,92 @@ def expand_event_view(
     return node
 
 
+def build_state_index_by_name(states_dir: Path) -> Dict[str, Dict[str, Any]]:
+    """
+    按文件名/文件 stem 建立 state 索引，优先用于 start_state 匹配。
+    """
+    index: Dict[str, Dict[str, Any]] = {}
+
+    for fp in sorted(states_dir.glob("state_*.json")):
+        data = read_json(fp)
+        if not isinstance(data, dict):
+            continue
+
+        stem = fp.stem              # state_2026-04-05_201457
+        name = fp.name              # state_2026-04-05_201457.json
+        short = stem.replace("state_", "", 1)   # 2026-04-05_201457
+
+        for key in {stem, name, short, f"{stem}.json", f"state_{short}"}:
+            index[key] = data
+
+    return index
+
+
+def normalize_state_ref(value: Any) -> Optional[str]:
+    """
+    归一化 start_state 引用，兼容：
+    - state_2026-04-05_201457
+    - state_2026-04-05_201457.json
+    - 2026-04-05_201457
+    - 路径形式
+    """
+    if value is None:
+        return None
+
+    s = str(value).strip()
+    if not s:
+        return None
+
+    s = s.replace("\\", "/")
+    name = s.split("/")[-1]
+    if name.endswith(".json"):
+        name = name[:-5]
+    return name or None
+
+
+def find_state_by_start_state(
+    start_state: Any,
+    state_index_by_name: Dict[str, Dict[str, Any]],
+) -> Optional[Dict[str, Any]]:
+    """
+    优先按 start_state 精确匹配 state。
+    """
+    key = normalize_state_ref(start_state)
+    if key is None:
+        return None
+
+    candidates = [
+        key,
+        f"{key}.json",
+        f"state_{key}" if not key.startswith("state_") else key,
+        f"state_{key}.json" if not key.startswith("state_") else f"{key}.json",
+    ]
+
+    for k in candidates:
+        if k in state_index_by_name:
+            return state_index_by_name[k]
+
+    return None
+
+
 def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
     """
     主处理流程：
+    - 优先按 event.start_state 找状态
+    - 找不到再按时间戳找最近且最早的 state
     - 返回 (总事件数, 成功展开数, 跳过数)
     """
     events_dir = run_dir / "events"
     states_dir = run_dir / "trees"
     out_events_dir = out_dir / "events"
 
+    # 两套索引：按名称、按时间
     state_index = build_state_index(states_dir)
+    states_list = build_state_index_by_time(states_dir)
+
+    if not states_list:
+        print("警告: 未找到任何状态文件")
+        return 0, 0, 0
 
     total = 0
     expanded = 0
@@ -324,59 +444,53 @@ def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
         data = read_json(event_fp)
         if not isinstance(data, dict):
             skipped += 1
+            print(f"跳过原因: 解析 JSON 失败 - {event_fp}")
             continue
+
+        stem = event_fp.stem
+        time_str = stem.replace("event_", "")
+        event_time = parse_timestamp(time_str)
 
         start_state = data.get("start_state")
         event_obj = data.get("event", {})
-
-        # 无 start_state 或无 event/view，直接拷贝输出
-        if not isinstance(start_state, str) or not isinstance(event_obj, dict) or not isinstance(event_obj.get("view"), dict):
+        if not isinstance(event_obj, dict) or not isinstance(event_obj.get("view"), dict):
             write_json(out_events_dir / event_fp.name, data)
             skipped += 1
+            print(f"跳过原因: event.view 不存在或格式不正确 - {event_fp}")
             continue
 
+        # 1) 优先按 start_state 找
         state_json = state_index.get(start_state)
+
+        # 2) 找不到再按时间戳找最近且最早的 state
+        if state_json is None:
+            print(f"未通过 start_state 匹配到状态{start_state}，尝试按时间戳匹配 - {event_fp}")
+            if event_time is None:
+                write_json(out_events_dir / event_fp.name, data)
+                skipped += 1
+                print(f"跳过原因: start_state 未命中且事件时间戳解析失败 - {event_fp}")
+                continue
+
+            state_json = find_nearest_state(event_time, states_list)
+
         if state_json is None:
             write_json(out_events_dir / event_fp.name, data)
             skipped += 1
+            print(f"跳过原因: 未找到对应状态 - {event_fp}")
             continue
 
         view_index = build_view_index(state_json)
         if not view_index:
             write_json(out_events_dir / event_fp.name, data)
             skipped += 1
+            print(f"跳过原因: 未找到有效的 view_index - {event_fp}")
             continue
 
-        # 展开 event.view
         original_view = event_obj["view"]
-
-        # 先确定 event.view 在 state 中对应哪个节点
-        target_id = resolve_event_view_id(original_view, view_index)
-
-        # 展开树
         event_obj["view"] = expand_event_view(original_view, view_index)
-        event_obj['viewTree'] = state_json.get('viewTree', {})
-
-        # 记录路径（root -> target）
-        if target_id is not None:
-            child_index_path, path_classes, node_chain = build_view_child_index_path_from_state(target_id, view_index)
-
-            # 主输出：你要的“第几个孩子路径”
-            event_obj["view_child_index_path"] = child_index_path
-
-            # 可选：保留 class 路径用于解释与调试
-            event_obj["view_path_classes"] = path_classes
-
-            # 可选调试：节点链（可删）
-            event_obj["view_path_node_chain"] = node_chain
-                        # event_obj["view_path"] = " > ".join(path_classes)
-        else:
-            event_obj["view_child_index_path"] = []
-            event_obj["view_path_classes"] = []
-            # event_obj["view_path"] = ""
+        event_obj["viewTree"] = state_json.get("viewTree", {})
 
         data["event"] = event_obj
-
         write_json(out_events_dir / event_fp.name, data)
         expanded += 1
 
@@ -384,13 +498,13 @@ def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="根据 start_state 展开 DroidBot event.view.children 为树结构")
+    parser = argparse.ArgumentParser(description="根据时间戳展开 DroidBot event.view.children 为树结构")
     parser.add_argument(
         "-i",
         type=Path,
         default=Path(r"d:\GithubProjects\hap-droid\baidunetdisk_1000"),
         dest="run_dir",
-        help="包含 events/ 和 states/ 的运行目录",
+        help="包含 events/ 和 trees/ 的运行目录",
     )
     parser.add_argument(
         "-o",

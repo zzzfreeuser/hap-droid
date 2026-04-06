@@ -416,10 +416,10 @@ def convert(
                                                 #  W_H=W_H, H_H=H_H, W_D=W_D, H_D=H_D
                                                  )
         
-        if hap_event is not None:
-            hap_event['view_child_index_path'] = d_event.get('view_child_index_path', [])
-            hap_event["view_path_classes"] = d_event.get("view_path_classes", [])
-            hap_event["view_path_node_chain"] = d_event.get("view_path_node_chain", [])
+        # if hap_event is not None:
+        #     hap_event['view_child_index_path'] = d_event.get('view_child_index_path', [])
+        #     hap_event["view_path_classes"] = d_event.get("view_path_classes", [])
+        #     hap_event["view_path_node_chain"] = d_event.get("view_path_node_chain", [])
 
         if hap_event is None:
             stats.skipped += 1

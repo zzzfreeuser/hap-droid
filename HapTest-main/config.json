@@ -1,7 +1,7 @@
 {
     "GPT_CONFIG":{
         "baseURL": "https://api-inference.modelscope.cn/v1/",
-        "apiKey": "ms-bfbd7e1d-266d-47ab-958a-04b4f38ea2c1"
+        "apiKey": ""
     }
     
 } 

@@ -61,8 +61,8 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "args": [
-        "-i", "baidunetdisk_1000",
-        "-o", "expand_results",
+        "-i", "E:\\githubProjects\\hap-droid\\out\\qqmusic_llm_20",
+        "-o", "E:\\githubProjects\\hap-droid\\out\\qqmusic_llm_20\\expands",
       ]
     },
     {
