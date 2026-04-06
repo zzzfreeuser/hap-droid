@@ -347,7 +347,8 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
 def build_hap_transition_like_json(
     hap_event: Dict[str, Any],
     droid_json: Dict[str, Any],
-    view_tree: Dict[str, Any]
+    view_tree: Dict[str, Any],
+    image_url: str,
 ) -> Dict[str, Any]:
     """
     构造 HapTest replay 可读取的 transition 风格 JSON。
@@ -361,7 +362,8 @@ def build_hap_transition_like_json(
             "abilityName": "",
             'viewTree': {
                 'root': view_tree
-            }
+            },
+            "imageUrl": image_url
         },
         "event": hap_event,
         "to": {
@@ -428,7 +430,7 @@ def convert(
             print(f"[WARN] 跳过未支持事件类型: {et} @ {fp.name}")
             continue
 
-        out_obj = build_hap_transition_like_json(hap_event, data, d_event.get('viewTree', {}))
+        out_obj = build_hap_transition_like_json(hap_event, data, d_event.get('viewTree', {}), d_event.get('imageUrl', ''))
 
         # 输出文件名：transition_<原tag格式化>.json
         tag = str(data.get("tag", fp.stem.replace("event_", "")))

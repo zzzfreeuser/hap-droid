@@ -489,6 +489,7 @@ def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
         original_view = event_obj["view"]
         event_obj["view"] = expand_event_view(original_view, view_index)
         event_obj["viewTree"] = state_json.get("viewTree", {})
+        event_obj["imageUrl"] = state_json.get("imageUrl")
 
         data["event"] = event_obj
         write_json(out_events_dir / event_fp.name, data)
