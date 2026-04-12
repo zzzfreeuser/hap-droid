@@ -111,6 +111,7 @@ def find_nearest_state(
     """
     candidates = [s for s in states_list if s[0] <= event_time]
     if not candidates:
+        print(f'未找到时间戳 <= {event_time} 的状态')
         return None
     
     # 取最后一个（时间最近的且 <= event_time）
@@ -492,6 +493,8 @@ def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
         event_obj["imageUrl"] = state_json.get("imageUrl")
 
         data["event"] = event_obj
+        data["width"] = state_json.get("width")
+        data["height"] = state_json.get("height")
         write_json(out_events_dir / event_fp.name, data)
         expanded += 1
 

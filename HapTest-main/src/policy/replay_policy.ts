@@ -26,7 +26,8 @@ import { PTG } from '../model/ptg';
 
 import OpenAI from 'openai';
 // import { Component } from '../model/component';
-import { SerializeUtils } from '../utils/serialize_utils'
+import { SerializeUtils } from '../utils/serialize_utils';
+import sharp from 'sharp';
 
 export class ReplayPolicy extends Policy {
     steps: [Page, Event][];
@@ -90,6 +91,85 @@ export class ReplayPolicy extends Policy {
             const AndroidPageJson = JSON.stringify(AndroidPage);
             const currentPageJson = JSON.stringify(SerializeUtils.serialize(currentPage));
 
+            const AndroidPageSnapshot = AndroidPage.getSnapshot()?.screenCapPath;
+            const harmonyPageSnapshot = currentPage.getSnapshot()?.screenCapPath;
+            const androidImagePath = path.join(path.dirname(harmonyPageSnapshot || ''), 'temp_android_src.jpg');
+            // const harmonyImagePath = path.join(path.dirname(harmonyPageSnapshot || ''), 'temp_harmony_view.jpg');
+            if (AndroidPageSnapshot != '') {
+                await sharp(AndroidPageSnapshot).extract({
+                    left: sourceEventJson['component']['bounds'][0]['x'], 
+                    top: sourceEventJson['component']['bounds'][0]['y'],  
+                    width: sourceEventJson['component']['bounds'][1]['x'] - sourceEventJson['component']['bounds'][0]['x'],
+                    height: sourceEventJson['component']['bounds'][1]['y'] - sourceEventJson['component']['bounds'][0]['y'],
+                }).toFile(androidImagePath);
+            }
+
+            // const prompt = [
+            //     '你是移动端UI组件匹配助手。任务是任根据安卓事件中的组件信息, 在鸿蒙候选组件列表中选最匹配的一个.',
+            //     '由于安卓和鸿蒙ui组件可能存在差异,以及安卓设备和鸿蒙设备屏幕尺寸不同,所以同一组件坐标可能不同,相同坐标也可能不对应同一组件',
+            //     '你要把安卓组件的json和截图和鸿蒙组件的json和截图做对比,给相似度打分(0-100分)',
+            // ].join('\n');
+
+            // await this.openai.chat.completions.create({
+            //     model: "qwen-plus",
+            //     messages: [{ role: 'user', content: prompt }]
+            // }); 
+
+            // let candidateScores: [Component, number][] = [];
+
+            // for (const candidate of candidates) {
+            //     const bounds = candidate?.bounds;
+            //     if (!Array.isArray(bounds) || bounds.length < 2) {
+            //         continue;
+            //     }
+            //     await sharp(harmonyPageSnapshot!).extract({
+            //         left: bounds[0]['x'], 
+            //         top: bounds[0]['y'], 
+            //         width: candidate.getWidth(),
+            //         height: candidate.getHeight(),
+            //     }).toFile(harmonyImagePath); 
+
+            //     const message = [
+            //         `当前安卓组件: ${srcComp}, 候选鸿蒙组件: ${SerializeUtils.serialize(candidate)}`,
+            //         `为了更好地判断,再给出当前安卓组件所在的安卓页面:${AndroidPageJson}`,
+            //         `和候选鸿蒙组件所在页面: ${currentPageJson}`,
+            //         `以及两者总页面的截图`,
+            //         `根据这些信息和截图,给两者相似度打分(0-100分, 越高表示越相似),直接给出分数，不要任何额外信息`,
+            //     ].join('\n');
+
+            //     const completion = await this.openai.chat.completions.create({
+            //         model: "qwen-plus",
+            //         messages: [
+            //             {
+            //                 "role": "user",
+            //                 "content": [
+            //                     {
+            //                         "type": "text",
+            //                         "text": message,
+            //                     },
+            //                     {
+            //                         "type": "image_url",
+            //                         "image_url": {
+            //                             "url": `file://${androidImagePath}`,
+            //                         },
+            //                     },
+            //                     {
+            //                         "type": "image_url",
+            //                         "image_url": {
+            //                             "url": `file://${harmonyImagePath}`,
+            //                         },
+            //                     },
+            //                 ],
+            //             }
+            //         ],
+            //     });
+            //     const raw = completion.choices?.[0]?.message?.content?.trim() || '';
+            //     const scoreMatch = raw.match(/(\d{1,3})/);
+            //     const score = scoreMatch ? parseInt(scoreMatch[1]) : 0;
+            //     candidateScores.push([candidate, score]);
+            // }
+            // candidateScores.sort((a, b) => b[1] - a[1]);
+
             const prompt = [
                 '你是移动端UI组件匹配助手。任务是任根据安卓事件中的组件信息, 在鸿蒙候选组件列表中选最匹配的一个.',
                 '由于安卓和鸿蒙ui组件可能存在差异,以及安卓设备和鸿蒙设备屏幕尺寸不同,所以同一组件坐标可能不同,相同坐标也可能不对应同一组件',
@@ -110,14 +190,71 @@ export class ReplayPolicy extends Policy {
             const m = raw.match(/\{[\s\S]*\}/);
             if (!m) return event;
 
-            const parsed = JSON.parse(m[0]);
+            const cvPrompt = [
+                `现在给出安卓组件截图和鸿蒙页面截图,直接返回鸿蒙页面中和安卓组件最相似的组件的左上角的坐标`,
+                `格式为{"x": number, "y": number}, 不要任何额外信息`,
+            ].join('\n');
+
+            const cvCompletion = await this.openai.chat.completions.create({
+                model: "qwen-plus",
+                messages: [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": cvPrompt,
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": `file://${androidImagePath}`,
+                                },
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": `file://${harmonyPageSnapshot}`,
+                                },
+                            },
+                        ],
+                    }
+                ],
+            });
+            const cvRaw = cvCompletion.choices?.[0]?.message?.content?.trim() || '';
+            const cvMatch = cvRaw.match(/\{[\s\S]*\}/);
+            const cvParsed = cvMatch ? JSON.parse(cvMatch[0]) : null;   
+
+            // const parsed = JSON.parse(m[0]);
 
             // 直接覆写事件组件（最小侵入）
-            (event as any).component = parsed;
+            // if (!candidateScores.length) return event;
 
-            let x = (parsed.bounds[0]['x'] + parsed.bounds[1]['x']) / 2;
-            let y = (parsed.bounds[0]['y'] + parsed.bounds[1]['y']) / 2;
-            (event as any).point = { 'x': x, 'y': y };
+            // const parsed = candidateScores[0][0];
+            // (event as any).component = parsed;
+
+            // const parsedBounds = parsed?.bounds;
+            // if (
+            //     !Array.isArray(parsedBounds) ||
+            //     parsedBounds.length < 2 ||
+            //     parsedBounds[0]?.['x'] === undefined ||
+            //     parsedBounds[0]?.['y'] === undefined ||
+            //     parsedBounds[1]?.['x'] === undefined ||
+            //     parsedBounds[1]?.['y'] === undefined
+            // ) {
+            //     return event;
+            // }
+ 
+            // await sharp(harmonyPageSnapshot).extract({
+            //     left: parsedBounds[0]['x'],
+            //     top: parsedBounds[0]['y'],
+            //     width: parsed.getWidth(),
+            //     height: parsed.getHeight(),
+            // }).toFile(harmonyImagePath);
+
+            // let x = (parsedBounds[0]['x'] + parsedBounds[1]['x']) / 2;
+            // let y = (parsedBounds[0]['y'] + parsedBounds[1]['y']) / 2;
+            (event as any).point = { 'x': cvParsed['x'], 'y': cvParsed['y'] };
 
             // 如果事件有 point，改成目标组件中心点
             // if ((event as any).point !== undefined) {

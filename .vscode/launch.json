@@ -29,11 +29,11 @@
         "ts-node/register"
       ],
       "args": [
-        "-i", "com.tencent.hm.qqmusic",
-        "-o", "..\\out\\qqmusic_llm_converted",
+        "-i", "com.dongqiudi.hmn.news",
+        "-o", "..\\out\\dqd_llm_converted",
         // "--debug",
         "--policy", "replay",
-        "--report", "..\\out\\qqmusic_30_llm\\converts",
+        "--report", "D:\\GithubProjects\\hap-droid\\out\\dqd_10_llm\\converts",
       ],
       "sourceMaps": true,
       "console": "integratedTerminal"
@@ -61,8 +61,8 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "args": [
-        "-i", "E:\\githubProjects\\hap-droid\\out\\qqmusic_llm_20",
-        "-o", "E:\\githubProjects\\hap-droid\\out\\qqmusic_llm_20\\expands",
+        "-i", "D:\\GithubProjects\\hap-droid\\out\\wechat_30_llm",
+        "-o", "D:\\GithubProjects\\hap-droid\\out\\wechat_30_llm\\expands",
       ]
     },
     {

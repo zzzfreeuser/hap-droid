@@ -363,12 +363,13 @@ def build_hap_transition_like_json(
             'viewTree': {
                 'root': view_tree
             },
-            "imageUrl": image_url
+            'snapshot': {
+                "screenWidth": droid_json.get("width", 0),
+                "screenHeight": droid_json.get("height", 0),
+                "screenCapPath": image_url,
+            }
         },
         "event": hap_event,
-        "to": {
-            "pagePath": "",
-        },
         # 使用 droid state 作为可追踪签名（非 HapTest 原生内容签名，但便于调试）
         "fromContentSig": droid_json.get("start_state", ""),
         "toContentSig": droid_json.get("stop_state", ""),

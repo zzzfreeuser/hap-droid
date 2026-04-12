@@ -132,7 +132,7 @@ def main():
         tree = build_tree_from_views(views)
 
         state['viewTree'] = tree
-        state['imageUrl'] = str(state_file.resolve()).replace("state", "screen").replace(".json", ".jpg")
+        state['imageUrl'] = str(state_file.resolve()).replace("state_", "screen_").replace(".json", ".jpg")
 
         out_file.parent.mkdir(parents=True, exist_ok=True)
         out_file.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")

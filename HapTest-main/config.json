@@ -1,7 +1,7 @@
 {
     "GPT_CONFIG":{
-        "baseURL": "https://api-inference.modelscope.cn/v1/",
-        "apiKey": "ms-bfbd7e1d-266d-47ab-958a-04b4f38ea2c1"
+        "baseURL": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "apiKey": "sk-3066cc299d1549bfaa965ba4f7fa2f0f"
     }
     
 } 
