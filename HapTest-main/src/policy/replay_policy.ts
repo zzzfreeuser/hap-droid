@@ -25,7 +25,7 @@ import { EventBuilder } from '../event/event_builder';
 import { PTG } from '../model/ptg';
 
 import OpenAI from 'openai';
-import { Component } from '../model/component';
+// import { Component } from '../model/component';
 import { SerializeUtils } from '../utils/serialize_utils';
 import sharp from 'sharp';
 
@@ -61,7 +61,7 @@ export class ReplayPolicy extends Policy {
 
     private openai: OpenAI;
     private reports: any[] = [];
-    private endTime: number = 0;
+    // private endTime: number = 0;
 
     private static GPT_CONFIG: { baseURL: string; apiKey: string };
 
@@ -106,7 +106,7 @@ export class ReplayPolicy extends Policy {
             const candidates = currentPage.getComponents().filter(c => c.hasUIEvent && c.hasUIEvent());
             if (!candidates.length) return event;
 
-            // const candidatePayload: string[] = candidates.map((c: any) => SerializeUtils.serialize(c));
+            const candidatePayload: string[] = candidates.map((c: any) => SerializeUtils.serialize(c));
 
             const srcComp = JSON.stringify(sourceEventJson.component);
             const AndroidPageJson = JSON.stringify(AndroidPage);
@@ -131,91 +131,88 @@ export class ReplayPolicy extends Policy {
                 }).toFile(androidImagePath);
             }
 
-            const prompt = [
-                '你是移动端UI组件匹配助手。任务是任根据安卓事件中的组件信息, 在鸿蒙候选组件列表中选最匹配的一个.',
-                '由于安卓和鸿蒙ui组件可能存在差异,以及安卓设备和鸿蒙设备屏幕尺寸不同,所以同一组件坐标可能不同,相同坐标也可能不对应同一组件',
-                '你要把安卓组件的json和截图和鸿蒙组件的json和截图做对比,给相似度打分(0-100分)',
-            ].join('\n');
-
-            await this.openai.chat.completions.create({
-                model: "glm-5.1",
-                messages: [{ role: 'user', content: prompt }]
-            }); 
-
-            let candidateScores: [Component, number][] = [];
-
-            for (const candidate of candidates) {
-                const bounds = candidate?.bounds;
-                if (!Array.isArray(bounds) || bounds.length < 2) {
-                    continue;
-                }
-                await sharp(harmonyPageSnapshot!).extract({
-                    left: bounds[0]['x'], 
-                    top: bounds[0]['y'], 
-                    width: candidate.getWidth(),
-                    height: candidate.getHeight(),
-                }).toFile(harmonyImagePath); 
-
-                const message = [
-                    `当前安卓组件: ${srcComp}, 候选鸿蒙组件: ${SerializeUtils.serialize(candidate)}`,
-                    `为了更好地判断,再给出当前安卓组件所在的安卓页面:${AndroidPageJson}`,
-                    `和候选鸿蒙组件所在页面: ${currentPageJson}`,
-                    `以及两者总页面的截图`,
-                    `根据这些信息和截图,给两者相似度打分(0-100分, 越高表示越相似),直接给出分数，不要任何额外信息`,
-                ].join('\n');
-
-                const completion = await this.openai.chat.completions.create({
-                    model: "glm-4.6v",
-                    messages: [
-                        {
-                            "role": "user",
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "text": message,
-                                },
-                                {
-                                    "type": "image_url",
-                                    "image_url": {
-                                        "url": imageToDataUrl(androidImagePath),
-                                    },
-                                },
-                                {
-                                    "type": "image_url",
-                                    "image_url": {
-                                        "url": imageToDataUrl(harmonyPageSnapshot),
-                                    },
-                                },
-                            ],
-                        }
-                    ],
-                });
-                const raw = completion.choices?.[0]?.message?.content?.trim() || '';
-                const scoreMatch = raw.match(/(\d{1,3})/);
-                const score = scoreMatch ? parseInt(scoreMatch[1]) : 0;
-                candidateScores.push([candidate, score]);
-            }
-            candidateScores.sort((a, b) => b[1] - a[1]);
-
             // const prompt = [
             //     '你是移动端UI组件匹配助手。任务是任根据安卓事件中的组件信息, 在鸿蒙候选组件列表中选最匹配的一个.',
             //     '由于安卓和鸿蒙ui组件可能存在差异,以及安卓设备和鸿蒙设备屏幕尺寸不同,所以同一组件坐标可能不同,相同坐标也可能不对应同一组件',
-            //     '你应当直接从鸿蒙候选组件列表中返回一个组件的json, 不要返回任何额外信息以及修改信息,特别是坐标信息,一定要保留鸿蒙组件原有坐标.',
-            //     `为了便于更好的判断,再给出当前安卓组件所在的安卓组件树和鸿蒙候选组件所在的鸿蒙页面的组件树的结构信息,但请注意,这些结构信息可能不完整或者有误,你需要学会根据这些不完全的信息进行判断.如果无法判断出一个明确的组件,请返回鸿蒙候选组件列表中最相似的一个组件.`,
-            //     `源组件: ${srcComp}`,
-            //     `鸿蒙候选组件列表: ${JSON.stringify(candidatePayload)}`,
-            //     `源安卓组件树: ${AndroidPageJson}`,
-            //     `目标鸿蒙组件树: ${currentPageJson}`,
+            //     '你要把安卓组件的json和截图和鸿蒙组件的json和截图做对比,给相似度打分(0-100分)',
             // ].join('\n');
+
+            // await this.openai.chat.completions.create({
+            //     model: "glm-5.1",
+            //     messages: [{ role: 'user', content: prompt }]
+            // }); 
+
+            // let candidateScores: [Component, number][] = [];
+
+            // for (const candidate of candidates) {
+            //     const bounds = candidate?.bounds;
+            //     if (!Array.isArray(bounds) || bounds.length < 2) {
+            //         continue;
+            //     }
+            //     await sharp(harmonyPageSnapshot!).extract({
+            //         left: bounds[0]['x'], 
+            //         top: bounds[0]['y'], 
+            //         width: candidate.getWidth(),
+            //         height: candidate.getHeight(),
+            //     }).toFile(harmonyImagePath); 
+
+            //     const message = [
+            //         `当前安卓组件: ${srcComp}, 候选鸿蒙组件: ${SerializeUtils.serialize(candidate)}`,
+            //         `为了更好地判断,再给出当前安卓组件所在的安卓页面:${AndroidPageJson}`,
+            //         `和候选鸿蒙组件所在页面: ${currentPageJson}`,
+            //         `以及两者总页面的截图`,
+            //         `根据这些信息和截图,给两者相似度打分(0-100分, 越高表示越相似),直接给出分数，不要任何额外信息`,
+            //     ].join('\n');
+
+            //     const completion = await this.openai.chat.completions.create({
+            //         model: "glm-4.6v",
+            //         messages: [
+            //             {
+            //                 "role": "user",
+            //                 "content": [
+            //                     {
+            //                         "type": "text",
+            //                         "text": message,
+            //                     },
+            //                     {
+            //                         "type": "image_url",
+            //                         "image_url": {
+            //                             "url": imageToDataUrl(androidImagePath),
+            //                         },
+            //                     },
+            //                     {
+            //                         "type": "image_url",
+            //                         "image_url": {
+            //                             "url": imageToDataUrl(harmonyPageSnapshot),
+            //                         },
+            //                     },
+            //                 ],
+            //             }
+            //         ],
+            //     });
+            //     const raw = completion.choices?.[0]?.message?.content?.trim() || '';
+            //     const scoreMatch = raw.match(/(\d{1,3})/);
+            //     const score = scoreMatch ? parseInt(scoreMatch[1]) : 0;
+            //     candidateScores.push([candidate, score]);
+            // }
+            // candidateScores.sort((a, b) => b[1] - a[1]);
+
+            const prompt = [
+                '你是移动端UI组件匹配助手。任务是任根据安卓事件中的组件信息, 在鸿蒙候选组件列表中选最匹配的一个.',
+                '由于安卓和鸿蒙ui组件可能存在差异,以及安卓设备和鸿蒙设备屏幕尺寸不同,所以同一组件坐标可能不同,相同坐标也可能不对应同一组件',
+                '你应当直接从鸿蒙候选组件列表中返回一个组件的json, 不要返回任何额外信息以及修改信息,特别是坐标信息,一定要保留鸿蒙组件原有坐标.',
+                `为了便于更好的判断,再给出当前安卓组件所在的安卓组件树和鸿蒙候选组件所在的鸿蒙页面的组件树的结构信息,但请注意,这些结构信息可能不完整或者有误,你需要学会根据这些不完全的信息进行判断.如果无法判断出一个明确的组件,请返回鸿蒙候选组件列表中最相似的一个组件.`,
+                `源组件: ${srcComp}`,
+                `鸿蒙候选组件列表: ${JSON.stringify(candidatePayload)}`,
+                `源安卓组件树: ${AndroidPageJson}`,
+                `目标鸿蒙组件树: ${currentPageJson}`,
+                `此外,再给出安卓组件和鸿蒙页面的截图,你应当根据候选组件的坐标对应图上的区域与安卓组件截图做对比,判断出最匹配的鸿蒙组件`,
+            ].join('\n');
 
             // const completion = await this.openai.chat.completions.create({
             //     model: "glm-5.1",
             //     messages: [{ role: 'user', content: prompt }]
             // });
-
-            // const raw = completion.choices?.[0]?.message?.content?.trim() || '';
-            // const m = raw.match(/\{[\s\S]*\}/);
-            // if (!m) return event;
 
             // const cvPrompt = [
             //     `现在给出安卓组件截图和鸿蒙页面截图,直接返回鸿蒙页面中和安卓组件最相似的组件的左上角的坐标和右下角的坐标,`,
@@ -227,42 +224,45 @@ export class ReplayPolicy extends Policy {
             //     `返回格式为[{"x": number, "y": number}, {"x": number, "y": number}]不要任何额外信息`,
             // ].join('\n');
 
-            // const cvCompletion = await this.openai.chat.completions.create({
-            //     model: "glm-4.6v",
-            //     messages: [
-            //         {
-            //             "role": "user",
-            //             "content": [
-            //                 {
-            //                     "type": "text",
-            //                     "text": cvPrompt,
-            //                 },
-            //                 {
-            //                     "type": "image_url",
-            //                     "image_url": {
-            //                         "url": imageToDataUrl(androidImagePath),
-            //                     },
-            //                 },
-            //                 {
-            //                     "type": "image_url",
-            //                     "image_url": {
-            //                         "url": imageToDataUrl(harmonyPageSnapshot),
-            //                     },
-            //                 },
-            //             ],
-            //         }
-            //     ],
-            // });
+            const completion = await this.openai.chat.completions.create({
+                model: "glm-4.6v",
+                messages: [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": prompt,
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": imageToDataUrl(androidImagePath),
+                                },
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": imageToDataUrl(harmonyPageSnapshot),
+                                },
+                            },
+                        ],
+                    }
+                ],
+            });
+            const raw = completion.choices?.[0]?.message?.content?.trim() || '';
+            const m = raw.match(/\{[\s\S]*\}/);
+            if (!m) return event;
             // const cvRaw = cvCompletion.choices?.[0]?.message?.content?.trim() || '';
             // const cvMatch = cvRaw.match(/\[[\s\S]*\]/);
             // const cvParsed = cvMatch ? JSON.parse(cvMatch[0]) : null;   
 
-            // const parsed = JSON.parse(m[0]);
+            const parsed = JSON.parse(m[0]);
 
             // 直接覆写事件组件（最小侵入）
-            if (!candidateScores.length) return event;
+            // if (!candidateScores.length) return event;
 
-            const parsed = candidateScores[0][0];
+            // const parsed = candidateScores[0][0];
             (event as any).component = parsed;
             // (event as any).component['bounds'] = cvParsed; // 用 LLM 预测的坐标替换原组件坐标
             // (event as any).component['origBounds'] = cvParsed; // 先保留一份原始坐标，万一后续需要调整坐标再用
@@ -278,6 +278,13 @@ export class ReplayPolicy extends Policy {
                 return event;
             }
  
+            await sharp(harmonyPageSnapshot).extract({
+                left: parsedBounds[0]['x'],
+                top: parsedBounds[0]['y'],
+                width: parsed.getWidth(),
+                height: parsed.getHeight(),
+            }).toFile(harmonyImagePath);
+
             await sharp(harmonyPageSnapshot).extract({
                 left: parsedBounds[0]['x'],
                 top: parsedBounds[0]['y'],
@@ -345,7 +352,7 @@ export class ReplayPolicy extends Policy {
         if (this.lastEvent && this.lastPage && this.currentPage) {
             this.ptg.addTransition(this.lastEvent, this.lastPage, this.currentPage);
             this.ptg.addTransitionToStop(this.currentPage);
-            this.endTime = await this.ptg.dumpSvg(
+            await this.ptg.dumpSvg(
                 this.device.getOutput(), 
                 path.join(this.device.getOutput(), `/views/view_${this.currentStep}.jpg`)
             );
