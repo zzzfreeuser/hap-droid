@@ -22,7 +22,7 @@ def parse_dot_file(dot_path: Path) -> Tuple[List[Dict[str, Any]], List[Dict[str,
     """
     content = dot_path.read_text(encoding="utf-8", errors="ignore")
 
-    def parse_attrs(attr_text: str) -> Dict[str, str]:
+    def parse_attrs(attr_text: str) -> Dict[str, Any]:
         attrs: Dict[str, str] = {}
         if not attr_text:
             return attrs
@@ -49,14 +49,18 @@ def parse_dot_file(dot_path: Path) -> Tuple[List[Dict[str, Any]], List[Dict[str,
     )
 
     # 先解析边，后面可补齐节点
+    label_id = 0
     for m in edge_stmt_re.finditer(content):
+        label_id += 1
         from_id = m.group(1)
         to_id = m.group(2)
         edge_attrs = parse_attrs(m.group(3) or "")
         edges.append({
             "from": from_id,
             "to": to_id,
-            "attrs": edge_attrs
+            "attrs": edge_attrs,
+            "id": f'{from_id}-->{to_id}',
+            "label": f'{label_id}',  # 简单用数字标签区分多条边
         })
 
     # 解析节点（排除边语句）
@@ -121,7 +125,7 @@ def build_utg_js_object(nodes: List[Dict], edges: List[Dict]) -> Dict[str, Any]:
             "image": image if image else None,
             "shape": "image" if image else "box",
             "title": f"<table class=\"table\">\n<tr><th>state_str</th><td>{node_id}</td></tr>\n</table>",
-            "content": label
+            # "content": label
         }
         utg_nodes.append(utg_node)
     
@@ -208,7 +212,7 @@ def main():
         "-o", "--output",
         type=Path,
         default=None,
-        help="输出 utg.js 文件路径（默认: 同目录下 utg.js）"
+        help="输出 utg.js 文件路径(默认: 同目录下 utg.js)"
     )
     
     args = parser.parse_args()

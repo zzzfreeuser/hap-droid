@@ -52,6 +52,7 @@ export class PTG {
     private stopEvent: StopHapEvent;
     private stopPage?: Page;
     private wantTransition?: Transition;
+    private startTime: number = Date.now();
 
     constructor(hap: Hap, randomInput: boolean) {
         this.hap = hap;
@@ -258,7 +259,7 @@ export class PTG {
             );
             let dotNode = new Node(id, {
                 [_.label]: `${id}\n${Array.from(faultLogs).join('\n')}`,
-                [_.URL]: `${rootUrl}/node/${id}`,
+                // [_.URL]: `${rootUrl}/node/${id}`,
                 [_.image]: `${pages[0].getSnapshot()?.screenCapPath}`,
             });
             dotGraph.addNode(dotNode);
@@ -269,7 +270,7 @@ export class PTG {
             for (const target of this.pageStructualGraph.nodes()) {
                 if (this.pageStructualGraph.hasDirectedEdge(source, target)) {
                     const edge = new Edge([nodes.get(source)!, nodes.get(target)!], {
-                        [_.URL]: `${rootUrl}/edge/${source}/${target}`,
+                        [_.URL]: `${rootUrl}`,
                     });
                     dotGraph.addEdge(edge);
                 }
@@ -283,6 +284,8 @@ export class PTG {
         } catch(error) {
             
         }
+
+        return Date.now() - this.startTime;
     }
 
     /**

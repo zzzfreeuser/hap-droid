@@ -29,11 +29,11 @@
         "ts-node/register"
       ],
       "args": [
-        "-i", "com.dongqiudi.hmn.news",
-        "-o", "..\\out\\dqd_llm_converted",
+        "-i", "cn.gov.tax.its.hm",
+        "-o", "..\\out\\shui_llm_converted",
         // "--debug",
         "--policy", "replay",
-        "--report", "D:\\GithubProjects\\hap-droid\\out\\dqd_10_llm\\converts",
+        "--report", "D:\\GithubProjects\\hap-droid\\out\\shui_llm_30\\converts",
       ],
       "sourceMaps": true,
       "console": "integratedTerminal"
