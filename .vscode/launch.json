@@ -33,7 +33,7 @@
         "-o", "..\\out\\shui_llm_converted",
         // "--debug",
         "--policy", "replay",
-        "--report", "D:\\GithubProjects\\hap-droid\\out\\shui_llm_30\\converts",
+        "--report", "E:\\githubProjects\\hap-droid\\out\\shui_llm_30\\converts",
       ],
       "sourceMaps": true,
       "console": "integratedTerminal"

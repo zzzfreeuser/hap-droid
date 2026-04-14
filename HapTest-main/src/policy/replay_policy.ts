@@ -29,25 +29,30 @@ import OpenAI from 'openai';
 import { SerializeUtils } from '../utils/serialize_utils';
 import sharp from 'sharp';
 
-function imageToDataUrl(imagePath: string): string {
-    if (!fs.existsSync(imagePath) || !fs.statSync(imagePath).isFile()) {
-        throw new Error("Image file not found: " + imagePath);
-    }
+const encodeImage = (imagePath: fs.PathOrFileDescriptor) => {
+    const imageFile = fs.readFileSync(imagePath);
+    return imageFile.toString('base64');
+};
 
-    var picType = '';
-    if (imagePath.endsWith('.png')) {
-        // PNG 图片
-        picType = 'png';
-    } else if (imagePath.endsWith('.jpg') || imagePath.endsWith('.jpeg')) {
-        // JPEG 图片
-        picType = 'jpg';
-    }
+// function imageToDataUrl(imagePath: string): string {
+//     if (!fs.existsSync(imagePath) || !fs.statSync(imagePath).isFile()) {
+//         throw new Error("Image file not found: " + imagePath);
+//     }
 
-    const imageData = fs.readFileSync(imagePath);
-    const base64Encoded = imageData.toString("base64");
+//     var picType = '';
+//     if (imagePath.endsWith('.png')) {
+//         // PNG 图片
+//         picType = 'png';
+//     } else if (imagePath.endsWith('.jpg') || imagePath.endsWith('.jpeg')) {
+//         // JPEG 图片
+//         picType = 'jpg';
+//     }
 
-    return "data:image/" + picType + ";base64," + base64Encoded;
-}
+//     const imageData = fs.readFileSync(imagePath);
+//     const base64Encoded = imageData.toString("base64");
+
+//     return "data:image/" + picType + ";base64," + base64Encoded;
+// }
 
 export class ReplayPolicy extends Policy {
     steps: [Page, Event][];
@@ -224,27 +229,30 @@ export class ReplayPolicy extends Policy {
             //     `返回格式为[{"x": number, "y": number}, {"x": number, "y": number}]不要任何额外信息`,
             // ].join('\n');
 
+            const base64AndroidImage = encodeImage(androidImagePath);
+            const base64HarmonyImage = encodeImage(harmonyPageSnapshot);
+
             const completion = await this.openai.chat.completions.create({
-                model: "glm-4.6v",
+                model: "qwen3.6-plus",
                 messages: [
                     {
                         "role": "user",
                         "content": [
                             {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": `data:image/jpg;base64,${base64AndroidImage}`,
+                                },
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": `data:image/png;base64,${base64HarmonyImage}`,
+                                },
+                            },
+                            {
                                 "type": "text",
                                 "text": prompt,
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": imageToDataUrl(androidImagePath),
-                                },
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": imageToDataUrl(harmonyPageSnapshot),
-                                },
                             },
                         ],
                     }
@@ -281,15 +289,15 @@ export class ReplayPolicy extends Policy {
             await sharp(harmonyPageSnapshot).extract({
                 left: parsedBounds[0]['x'],
                 top: parsedBounds[0]['y'],
-                width: parsed.getWidth(),
-                height: parsed.getHeight(),
+                width: parsedBounds[1]['x'] - parsedBounds[0]['x'],
+                height: parsedBounds[1]['y'] - parsedBounds[0]['y'],
             }).toFile(harmonyImagePath);
 
             await sharp(harmonyPageSnapshot).extract({
                 left: parsedBounds[0]['x'],
                 top: parsedBounds[0]['y'],
-                width: parsed.getWidth(),
-                height: parsed.getHeight(),
+                width: parsedBounds[1]['x'] - parsedBounds[0]['x'],
+                height: parsedBounds[1]['y'] - parsedBounds[0]['y'],
             }).toFile(path.join(harmonyViewPath, `view_${this.currentStep}.jpg`));
 
             let x = (parsedBounds[0]['x'] + parsedBounds[1]['x']) / 2;
