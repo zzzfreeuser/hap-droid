@@ -98,8 +98,8 @@ function getOverallResult() {
   overallInfo += "<tr><th class=\"col-md-1\">Test date</th><td class=\"col-md-4\">" + utg.test_date + "</td></tr>\n";
   overallInfo += "<tr><th class=\"col-md-1\">Time spent (s)</th><td class=\"col-md-4\">" + utg.time_spent + "</td></tr>\n";
   overallInfo += "<tr><th class=\"col-md-1\"># input events</th><td class=\"col-md-4\">" + utg.num_input_events + "</td></tr>\n";
-  overallInfo += "<tr><th class=\"col-md-1\"># UTG states</th><td class=\"col-md-4\">" + utg.num_nodes + "</td></tr>\n";
-  overallInfo += "<tr><th class=\"col-md-1\"># UTG edges</th><td class=\"col-md-4\">" + utg.num_edges + "</td></tr>\n";
+  overallInfo += "<tr><th class=\"col-md-1\"># PTG states</th><td class=\"col-md-4\">" + utg.num_nodes + "</td></tr>\n";
+  overallInfo += "<tr><th class=\"col-md-1\"># PTG edges</th><td class=\"col-md-4\">" + utg.num_edges + "</td></tr>\n";
   activity_coverage = 100 * utg.num_reached_activities / utg.app_num_total_activities;
   overallInfo += "<tr><th class=\"col-md-1\">Activity_coverage</th><td class=\"col-md-4 progress\"><div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"" + utg.num_reached_activities + "\" aria-valuemin=\"0\" aria-valuemax=\"" + utg.app_num_total_activities + "\" style=\"width: " + activity_coverage + "%;\">" + utg.num_reached_activities + "/" + utg.app_num_total_activities + "</div></td></tr>\n";
 

@@ -26,7 +26,7 @@ import { getLogger } from 'log4js';
 import * as path from 'path';
 const logger = getLogger();
 
-type EdgeAttributeType = Map<string, { id: number; event: Event }>;
+type EdgeAttributeType = Map<string, { id: number; event: Event; step: number; }>;
 
 export interface Transition {
     from: Page;
@@ -73,15 +73,15 @@ export class PTG {
         logger.info(`ptg want transition ${transition.from.getContentSig()} -> ${transition.to.getContentSig()}`);
     }
 
-    addTransitionToStop(newPage: Page): void {
+    addTransitionToStop(newPage: Page, step: number): void {
         if (!this.stopPage || !newPage.isForeground()) {
             return;
         }
 
-        this.addTransition(this.stopEvent, newPage, this.stopPage);
+        this.addTransition(this.stopEvent, newPage, this.stopPage, step);
     }
 
-    addTransition(event: Event, oldPage: Page, newPage: Page): void {
+    addTransition(event: Event, oldPage: Page, newPage: Page, step: number): void {
         if (this.wantTransition) {
             logger.info(`ptg want transition ${oldPage.getContentSig()} -> ${newPage.getContentSig()}`);
             if (
@@ -125,14 +125,14 @@ export class PTG {
             logger.info(`ptg add edge ${oldPage.getContentSig()} -> ${newPage.getContentSig()}`);
         }
         let attr = this.pageContentGraph.getEdgeAttributes(oldPage.getContentSig(), newPage.getContentSig());
-        attr.set(eventPageSig, { event: event, id: this.effectiveEvent.size });
+        attr.set(eventPageSig, { event: event, id: this.effectiveEvent.size , step: step });
 
         if (!this.pageStructualGraph.hasDirectedEdge(oldPage.getStructualSig(), newPage.getStructualSig())) {
             this.pageStructualGraph.addDirectedEdge(oldPage.getStructualSig(), newPage.getStructualSig(), new Map());
         }
 
         attr = this.pageStructualGraph.getEdgeAttributes(oldPage.getStructualSig(), newPage.getStructualSig());
-        attr.set(eventPageSig, { event: event, id: this.effectiveEvent.size });
+        attr.set(eventPageSig, { event: event, id: this.effectiveEvent.size , step: step });
     }
 
     removeTransition(event: Event, oldPage: Page, newPage: Page): void {
@@ -235,7 +235,7 @@ export class PTG {
         return steps;
     }
 
-    async dumpSvg(output: string, rootUrl: string) {
+    async dumpSvg(output: string) {
         const dotGraph = new Digraph('PTG');
         dotGraph.node({
             fontname: 'Helvetica,Arial,sans-serif',
@@ -266,15 +266,32 @@ export class PTG {
             nodes.set(id, dotNode);
         }
 
-        for (const source of this.pageStructualGraph.nodes()) {
-            for (const target of this.pageStructualGraph.nodes()) {
-                if (this.pageStructualGraph.hasDirectedEdge(source, target)) {
-                    const edge = new Edge([nodes.get(source)!, nodes.get(target)!], {
-                        [_.URL]: `${rootUrl}`,
-                    });
-                    dotGraph.addEdge(edge);
-                }
-            }
+        // for (const source of this.pageStructualGraph.nodes()) {
+        //     for (const target of this.pageStructualGraph.nodes()) {
+        //         if (this.pageStructualGraph.hasDirectedEdge(source, target)) {
+        //             const attr = this.pageStructualGraph.getEdgeAttributes(source, newPage.getStructualSig())
+        //             const edge = new Edge([nodes.get(source)!, nodes.get(target)!], {
+        //                 [_.URL]: `${rootUrl}`,
+        //             });
+        //             dotGraph.addEdge(edge);
+        //         }
+        //     }
+        // }
+
+        for (const edgeKey of this.pageStructualGraph.edges()) {
+            const source = this.pageStructualGraph.source(edgeKey);
+            const target = this.pageStructualGraph.target(edgeKey);
+
+            // 取出这条边的属性（你的 EdgeAttributeType）
+            const edgeAttr = this.pageStructualGraph.getEdgeAttributes(edgeKey);
+            // 例如可取事件数/step 等信息
+
+            const firstAttr = edgeAttr.values().next().value;
+            const step = firstAttr?.step ?? 0;
+            const edge = new Edge([nodes.get(source)!, nodes.get(target)!], {
+                [_.URL]: path.join(output, `views/view_${step}.jpg`),
+            });
+            dotGraph.addEdge(edge);
         }
 
         try {

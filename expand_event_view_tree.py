@@ -426,7 +426,7 @@ def process_events(run_dir: Path, out_dir: Path) -> Tuple[int, int, int]:
     """
     events_dir = run_dir / "events"
     states_dir = run_dir / "trees"
-    out_events_dir = out_dir / "events"
+    out_events_dir = out_dir / "expands" / "events"
 
     # 两套索引：按名称、按时间
     state_index = build_state_index(states_dir)

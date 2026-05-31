@@ -1,7 +1,7 @@
 {
     "GPT_CONFIG":{
-        "baseURL": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "apiKey": ""
+        "baseURL": "https://open.bigmodel.cn/api/paas/v4/",
+        "apiKey": "3d2150e7f0974a31be722099e55d68cd.ZwOFCliolbDklvNy"
     }
     
 } 

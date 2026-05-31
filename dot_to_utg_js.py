@@ -26,8 +26,8 @@ def parse_dot_file(dot_path: Path) -> Tuple[List[Dict[str, Any]], List[Dict[str,
         attrs: Dict[str, str] = {}
         if not attr_text:
             return attrs
-        # 只提取 key="value" 形式
-        for k, v in re.findall(r'([A-Za-z_]\w*)\s*=\s*"((?:[^"\\]|\\.)*)"', attr_text, flags=re.S):
+        # 支持 key="value"，value 里允许出现 Windows 反斜杠路径
+        for k, v in re.findall(r'([A-Za-z_]\w*)\s*=\s*"([^"]*)"', attr_text, flags=re.S):
             attrs[k] = v
         return attrs
 
@@ -137,7 +137,7 @@ def build_utg_js_object(nodes: List[Dict], edges: List[Dict]) -> Dict[str, Any]:
         from_id = edge["from"]
         to_id = edge["to"]
         edge_key = f"{from_id}-->{to_id}"
-        
+
         # 同一对节点的多条边用编号区分
         if edge_key in edge_id_counter:
             edge_id_counter[edge_key] += 1
@@ -145,19 +145,26 @@ def build_utg_js_object(nodes: List[Dict], edges: List[Dict]) -> Dict[str, Any]:
         else:
             edge_id_counter[edge_key] = 1
             label = "1"
-        
+
+        edge_attrs = edge.get("attrs", {})
+        edge_url = edge_attrs.get("URL") or edge_attrs.get("url") or ""
+        view_images = []
+        if isinstance(edge_url, str) and edge_url.strip():
+            # droidbot 前端对 / 更友好
+            view_images = [edge_url.replace("\\", "/")]
+
         utg_edge = {
             "from": from_id,
             "to": to_id,
             "id": edge_key,
-            "title": f"<table class=\"table\">\n<tr><th>{label}</th><td>Event</td></tr>\n</table>",
-            "label": label,
+            "title": f"<table class=\"table\">\\n<tr><th>{i + 1}</th><td>Event</td></tr>\\n</table>",
+            "label": i + 1,
             "events": [
                 {
                     "event_str": "TouchEvent",
-                    "event_id": i,
+                    "event_id": i + 1,
                     "event_type": "touch",
-                    "view_images": []
+                    "view_images": view_images
                 }
             ]
         }

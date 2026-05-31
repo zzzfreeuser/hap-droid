@@ -211,9 +211,7 @@ def map_droid_event_to_hap_event(d_event: Dict[str, Any], bundle_name: str,
 
     # 1) kill_app -> StopHapEvent
     if et == "kill_app":
-        return None
-        # bundle = parse_force_stop_intent(d_event.get("stop_intent", ""))
-        # return {"type": "StopHapEvent", "bundleName": bundle}
+        return {"type": "StopHapEvent", "bundleName": bundle_name}
 
     # 2) intent -> AbilityEvent
     if et == "intent":
@@ -389,7 +387,7 @@ def convert(
 
     droid_dir = droid_dir / "events"
     files = sorted(droid_dir.glob("event_*.json"))
-    events_out_dir = out_dir / "events"
+    events_out_dir = out_dir / "converts" / "events"
     events_out_dir.mkdir(parents=True, exist_ok=True)
 
     # res = subprocess.run('hdc shell hidumper -s RenderService -a screen', capture_output=True)

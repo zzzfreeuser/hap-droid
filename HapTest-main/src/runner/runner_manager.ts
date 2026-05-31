@@ -26,7 +26,7 @@ import { PTGPolicy } from '../policy/ptg_policy';
 import { WaitEvent } from '../event/wait_event';
 import { LLMGuidedPolicy } from '../policy/llm_guided_policy';
 
-const EVENT_INTERVAL = 1000;
+const EVENT_INTERVAL = 5000;
 const MAX_TRY_COUNT = 10; 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 

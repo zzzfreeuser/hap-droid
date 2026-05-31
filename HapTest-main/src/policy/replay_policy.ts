@@ -19,7 +19,7 @@ import { Event } from '../event/event';
 import { Hap } from '../model/hap';
 import { Page } from '../model/page';
 import { Policy, PolicyName } from './policy';
-import { ExitEvent } from '../event/system_event';
+import { AbilityEvent, ExitEvent, StopHapEvent } from '../event/system_event';
 import path from 'path';
 import { EventBuilder } from '../event/event_builder';
 import { PTG } from '../model/ptg';
@@ -28,6 +28,7 @@ import OpenAI from 'openai';
 // import { Component } from '../model/component';
 import { SerializeUtils } from '../utils/serialize_utils';
 import sharp from 'sharp';
+import { BACK_KEY_EVENT, KeyEvent } from '../event/key_event';
 
 const encodeImage = (imagePath: fs.PathOrFileDescriptor) => {
     const imageFile = fs.readFileSync(imagePath);
@@ -114,8 +115,8 @@ export class ReplayPolicy extends Policy {
             const candidatePayload: string[] = candidates.map((c: any) => SerializeUtils.serialize(c));
 
             const srcComp = JSON.stringify(sourceEventJson.component);
-            const AndroidPageJson = JSON.stringify(AndroidPage);
-            const currentPageJson = JSON.stringify(SerializeUtils.serialize(currentPage));
+            // const AndroidPageJson = JSON.stringify(AndroidPage);
+            // const currentPageJson = JSON.stringify(SerializeUtils.serialize(currentPage));
 
             const AndroidPageSnapshot = AndroidPage.getSnapshot()?.screenCapPath;
             // const AndroidDeviceWidth = AndroidPage.getSnapshot()?.screenWidth;
@@ -206,12 +207,12 @@ export class ReplayPolicy extends Policy {
                 '你是移动端UI组件匹配助手。任务是任根据安卓事件中的组件信息, 在鸿蒙候选组件列表中选最匹配的一个.',
                 '由于安卓和鸿蒙ui组件可能存在差异,以及安卓设备和鸿蒙设备屏幕尺寸不同,所以同一组件坐标可能不同,相同坐标也可能不对应同一组件',
                 '你应当直接从鸿蒙候选组件列表中返回一个组件的json, 不要返回任何额外信息以及修改信息,特别是坐标信息,一定要保留鸿蒙组件原有坐标.',
-                `为了便于更好的判断,再给出当前安卓组件所在的安卓组件树和鸿蒙候选组件所在的鸿蒙页面的组件树的结构信息,但请注意,这些结构信息可能不完整或者有误,你需要学会根据这些不完全的信息进行判断.如果无法判断出一个明确的组件,请返回鸿蒙候选组件列表中最相似的一个组件.`,
+                // `为了便于更好的判断,再给出当前安卓组件所在的安卓组件树和鸿蒙候选组件所在的鸿蒙页面的组件树的结构信息,但请注意,这些结构信息可能不完整或者有误,你需要学会根据这些不完全的信息进行判断.如果无法判断出一个明确的组件,请返回鸿蒙候选组件列表中最相似的一个组件.`,
                 `源组件: ${srcComp}`,
                 `鸿蒙候选组件列表: ${JSON.stringify(candidatePayload)}`,
-                `源安卓组件树: ${AndroidPageJson}`,
-                `目标鸿蒙组件树: ${currentPageJson}`,
-                `此外,再给出安卓组件和鸿蒙页面的截图,你应当根据候选组件的坐标对应图上的区域与安卓组件截图做对比,判断出最匹配的鸿蒙组件`,
+                // `源安卓组件树: ${AndroidPageJson}`,
+                // `目标鸿蒙组件树: ${currentPageJson}`,
+                `为了便于更好的判断,再给出安卓组件和鸿蒙页面的截图,你应当根据候选组件的坐标对应图上的区域与安卓组件截图做对比,判断出最匹配的鸿蒙组件`,
             ].join('\n');
 
             // const completion = await this.openai.chat.completions.create({
@@ -233,7 +234,7 @@ export class ReplayPolicy extends Policy {
             const base64HarmonyImage = encodeImage(harmonyPageSnapshot);
 
             const completion = await this.openai.chat.completions.create({
-                model: "qwen3.6-plus",
+                model: "glm-4.6v",
                 messages: [
                     {
                         "role": "user",
@@ -300,8 +301,8 @@ export class ReplayPolicy extends Policy {
                 height: parsedBounds[1]['y'] - parsedBounds[0]['y'],
             }).toFile(path.join(harmonyViewPath, `view_${this.currentStep}.jpg`));
 
-            let x = (parsedBounds[0]['x'] + parsedBounds[1]['x']) / 2;
-            let y = (parsedBounds[0]['y'] + parsedBounds[1]['y']) / 2;
+            let x = Math.round((parsedBounds[0]['x'] + parsedBounds[1]['x']) / 2);
+            let y = Math.round((parsedBounds[0]['y'] + parsedBounds[1]['y']) / 2);
             (event as any).point = { 'x': x, 'y': y };
 
             // 如果事件有 point，改成目标组件中心点
@@ -323,31 +324,32 @@ export class ReplayPolicy extends Policy {
 
         // 用“上一个事件 + 上一个页面 + 当前页面”更新 PTG
         this.updatePtg();
-
-        // 步骤跑完：导出最终图并退出
         if (this.currentStep === this.steps.length) {
-            // this.ptg.addTransitionToStop(page);
-            // this.ptg.dumpSvg(this.device.getOutput(), 'http://localhost:3001');
             this.stop();
             return new ExitEvent();
         }
-
-        if (this.currentStep == 0) {
-            this.currentStep++;
-            return this.steps[0][1];
+        const stepIdx = this.currentStep;
+        var event = this.steps[this.currentStep++][1];
+        const report = this.reports[stepIdx];
+        if (event instanceof StopHapEvent) {
+            return event;
         }
 
-        this.logger.info(page.getContentSig(), this.steps[this.currentStep][0].getContentSig());
+        if (event instanceof AbilityEvent) {
+            return event;
+        }
 
-        const stepIdx = this.currentStep;
-        let event = this.steps[this.currentStep][1];
+        if (!this.currentPage.isStop() && !this.currentPage.isForeground()) {
+            if (event instanceof KeyEvent && event.toString() === BACK_KEY_EVENT.toString()) {
+                return event;
+            }
+        }
 
-        const report = this.reports[stepIdx];
+        this.logger.info(page.getContentSig(), this.steps[stepIdx][0].getContentSig());
+
         event = await this.tryRelocateEventComponentByLLM(event, report?.event, 
-            this.steps[this.currentStep][0], 
+            this.steps[stepIdx][0], 
             page);
-
-        this.currentStep++;
 
         // 为下一轮 updatePtg 准备“上一条边”的起点和事件
         this.lastPage = this.currentPage;
@@ -358,11 +360,10 @@ export class ReplayPolicy extends Policy {
 
     private async updatePtg(): Promise<void> {
         if (this.lastEvent && this.lastPage && this.currentPage) {
-            this.ptg.addTransition(this.lastEvent, this.lastPage, this.currentPage);
-            this.ptg.addTransitionToStop(this.currentPage);
+            this.ptg.addTransition(this.lastEvent, this.lastPage, this.currentPage, this.currentStep);
+            this.ptg.addTransitionToStop(this.currentPage, this.currentStep);
             await this.ptg.dumpSvg(
                 this.device.getOutput(), 
-                path.join(this.device.getOutput(), `/views/view_${this.currentStep}.jpg`)
             );
         }
     }

@@ -83,10 +83,10 @@ export abstract class PTGPolicy extends Policy {
 
     private updatePtg(): void {
         if (this.lastEvent && this.lastPage && this.currentPage) {
-            this.ptg.addTransition(this.lastEvent, this.lastPage, this.currentPage);
+            // this.ptg.addTransition(this.lastEvent, this.lastPage, this.currentPage, this);
             // transition to StopState
-            this.ptg.addTransitionToStop(this.currentPage);
-            this.ptg.dumpSvg(this.device.getOutput(), 'http://localhost:3001');
+            // this.ptg.addTransitionToStop(this.currentPage);
+            // this.ptg.dumpSvg(this.device.getOutput(), 'http://localhost:3001');
         } 
     }
 

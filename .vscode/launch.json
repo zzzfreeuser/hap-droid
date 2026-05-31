@@ -29,14 +29,14 @@
         "ts-node/register"
       ],
       "args": [
-        "-i", "cn.gov.tax.its.hm",
-        "-o", "..\\out\\shui_llm_converted",
+        "-i", "com.xunmeng.pinduoduo.hos",
+        "-o", "..\\out\\ppd_llm_converted",
         // "--debug",
         "--policy", "replay",
-        "--report", "E:\\githubProjects\\hap-droid\\out\\shui_llm_30\\converts",
+        "--report", "D:\\GithubProjects\\hap-droid\\out\\pdd_llm_30\\converts",
       ],
       "sourceMaps": true,
-      "console": "integratedTerminal"
+      // "console": "integratedTerminal"
     },
     {
       "name": "Python: Debug convert",
